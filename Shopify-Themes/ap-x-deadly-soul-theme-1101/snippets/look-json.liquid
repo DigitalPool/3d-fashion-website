@@ -1,0 +1,38 @@
+{%- capture mockup -%}{% render 'product-mockup', product: p %}{%- endcapture -%}
+{
+  "id": {{ p.id | json }},
+  "handle": {{ p.handle | json }},
+  "title": {{ p.title | json }},
+  "type": {{ p.type | json }},
+  "tags": {{ p.tags | json }},
+  "url": {{ p.url | json }},
+  "options": {{ p.options | json }},
+  "mockup": {{ mockup | strip | json }},
+  "thumb": {% if p.featured_image %}{{ p.featured_image | image_url: width: 200 | json }}{% else %}""{% endif %},
+  "photos": [
+    {%- assign separator = '' -%}
+    {%- for photo in p.images limit: 24 -%}
+      {%- assign photo_alt = photo.alt | default: '' | downcase -%}
+      {%- if photo_alt == 'print' or photo_alt contains '[print]' -%}{%- continue -%}{%- endif -%}
+      {{ separator }}{
+        "src": {{ photo | image_url: width: 1440 | json }},
+        "label": {{ photo.alt | default: p.title | json }},
+        "model": {% if photo_alt contains 'on-model' %}true{% else %}false{% endif %}
+      }
+      {%- assign separator = ',' -%}
+    {%- endfor -%}
+  ],
+  "variants": [
+    {%- for v in p.variants limit: 60 -%}
+      {
+        "id": {{ v.id | json }},
+        "title": {{ v.title | json }},
+        "options": {{ v.options | json }},
+        "available": {{ v.available | json }},
+        "price": {{ v.price | json }},
+        "compare_at_price": {{ v.compare_at_price | default: 0 | json }},
+        "image": {% if v.featured_image %}{{ v.featured_image | image_url: width: 1440 | json }}{% else %}""{% endif %}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}

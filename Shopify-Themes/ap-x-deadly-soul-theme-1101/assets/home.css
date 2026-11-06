@@ -1,0 +1,79 @@
+/* Home page: floating 3D hoodie, object index and campaign sections */
+
+/* ---- floating hoodie ---- */
+.hoodie{position:fixed;inset:0;z-index:3;pointer-events:none}
+.hoodie__gl{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s ease}
+.hoodie.is-ready .hoodie__gl{opacity:1}
+.hoodie__hit{position:absolute;left:0;top:0;pointer-events:auto;touch-action:pan-y;cursor:grab;border-radius:40%;-webkit-user-select:none;user-select:none}
+.hoodie__hit.is-dragging{cursor:grabbing}
+.hoodie__hit:focus-visible{outline:none}
+.hoodie__hit:focus-visible .hoodie__hint{border-color:#fff;color:#fff}
+.hoodie__hint{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);white-space:nowrap;padding:3px 9px;background:rgba(0,0,0,.6);border:1px solid var(--line-2);font:400 15px/1 var(--f-crt);letter-spacing:.14em;text-transform:uppercase;color:#ddd;transition:opacity .4s}
+.hoodie__hint.is-gone{opacity:0}
+
+/* The hoodie sits above the ribbon and key hint as it leaves the hero */
+.vs__ticker,.vs__hint{z-index:2}
+
+/* Hero landing spot: between the two sides, under the title */
+.vs__slot{position:absolute;left:35%;width:30%;top:27%;bottom:13%;pointer-events:none}
+
+/* Keeps the header readable over content scrolling beneath it */
+.template-index .hud{background:linear-gradient(rgba(6,6,8,.9),rgba(6,6,8,.55) 70%,transparent)}
+
+/* ---- object index ---- */
+.oi{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) clamp(300px,32vw,560px);gap:clamp(20px,3vw,48px);padding:clamp(70px,9vw,120px) var(--gut);border-top:1px solid var(--line);
+  background:radial-gradient(60% 40% at 0% 0%,color-mix(in srgb,var(--ap) 14%,transparent),transparent 70%),radial-gradient(50% 45% at 100% 45%,color-mix(in srgb,var(--ds) 14%,transparent),transparent 70%),var(--bg)}
+.oi__main{min-width:0}
+.oi__head{display:grid;gap:12px;margin-bottom:clamp(28px,4vw,48px)}
+.oi__head .h-display{font-size:clamp(44px,7vw,112px);line-height:.95}
+.oi__nav{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+.oi__nav[hidden]{display:none}
+.oi__nav button{width:44px;height:44px;background:rgba(0,0,0,.4);border:1px solid var(--line-2);color:var(--fg);font:400 22px/1 var(--f-crt);transition:background .2s,color .2s,opacity .2s}
+.oi__nav button:hover:not(:disabled){background:var(--fg);color:#000}
+.oi__nav button:disabled{opacity:.3}
+/* One line: padding leaves room for the card tilt, which the scroller would otherwise clip */
+.oi__grid{--gap:clamp(14px,1.6vw,22px);list-style:none;margin:-10px -10px 0;padding:10px 10px 14px;display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:10px;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+.oi__item{flex:0 0 max(210px,calc((100% - var(--gap) * 3) / 3.3));scroll-snap-align:start}
+.oi__item--ap{--accent:var(--ap);--accent-2:var(--ap-2)}
+.oi__item--ds{--accent:var(--ds);--accent-2:var(--ds-2)}
+.oi__tag{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;font:400 18px/1 var(--f-crt);letter-spacing:.1em;text-transform:uppercase}
+.oi__num{padding:2px 7px;background:var(--accent);color:#000}
+.oi__item--ap .oi__num{color:#fff}
+.oi__brand{color:var(--accent);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oi__item .card:hover .card__media{border-color:var(--accent)}
+.oi__all{margin-top:clamp(28px,4vw,44px)}
+.oi__slot{position:sticky;top:calc(var(--hud-h) + 12px);height:calc(100vh - var(--hud-h) - 24px);height:calc(100svh - var(--hud-h) - 24px)}
+
+/* ---- campaign ---- */
+.campaign{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;background:#03040a;border-top:1px solid var(--line);overflow:hidden}
+.campaign__media{position:absolute;inset:0}
+.campaign__media img{width:100%;height:100%;object-fit:cover;object-position:70% 50%}
+.campaign__copy{position:relative;flex:0 0 clamp(320px,36vw,620px);display:flex;flex-direction:column;padding:calc(var(--hud-h) + 10px) var(--gut) clamp(32px,6vh,64px)}
+.campaign__slot{flex:1 1 auto;min-height:0}
+.campaign__text{display:grid;gap:12px;justify-items:start}
+.campaign__text .h-display{font-size:clamp(38px,4.6vw,76px);line-height:.95;text-wrap:balance}
+.campaign__text .btn{margin-top:8px}
+
+/* ---- stacked hero (same breakpoint as base.css): open a gap on the seam for the hoodie ---- */
+@media (max-width:760px),(orientation:portrait){
+  .vs__slot{left:20%;width:60%;top:calc(50% - 11vh);top:calc(50% - 11svh);height:22vh;height:22svh}
+  .vs__side--ap{padding-bottom:12vh;padding-bottom:12svh}
+  .vs__side--ds{padding-top:13vh;padding-top:13svh}
+  .vs__logo{width:64px}
+}
+@media (max-height:720px) and (max-width:760px){.vs__logo{display:none}}
+
+/* ---- phones ---- */
+@media (max-width:760px){
+  .oi{grid-template-columns:minmax(0,1fr) 36vw;gap:10px;padding-inline:14px 0}
+  .oi__item{flex-basis:82%}
+  .oi__all{white-space:nowrap;font-size:12px;padding-inline:16px}
+  .oi__head .h-display{font-size:clamp(38px,12vw,60px)}
+  .oi__slot{top:27vh;top:27svh;height:46vh;height:46svh}
+  .campaign{display:block;min-height:0}
+  .campaign__copy{display:grid;grid-template-columns:minmax(0,1fr) 40%;gap:10px;align-items:center;padding:36px var(--gut)}
+  .campaign__text{order:-1}
+  .campaign__slot{height:230px}
+  .campaign__text .h-display{font-size:clamp(32px,9.5vw,48px)}
+  .campaign__media{position:relative;inset:auto;aspect-ratio:4/3}
+}

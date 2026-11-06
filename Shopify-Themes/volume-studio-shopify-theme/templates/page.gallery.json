@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "world": { "type": "world", "settings": { "brand": "ap", "stage": "reel", "label": "A/P × Deadly Soul", "title": "The gallery", "crumb": "Lookbook" } },
+    "gallery": { "type": "gallery-3d", "settings": { "show_heading": false } }
+  },
+  "order": ["world", "gallery"]
+}

@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "vs": { "type": "side-select", "settings": {} },
+    "index": { "type": "object-index", "settings": {} },
+    "campaign": { "type": "campaign-feature", "settings": {} },
+    "hoodie": { "type": "floating-hoodie", "settings": {} }
+  },
+  "order": ["vs", "index", "campaign", "hoodie"]
+}

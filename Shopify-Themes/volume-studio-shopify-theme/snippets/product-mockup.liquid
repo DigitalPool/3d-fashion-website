@@ -1,0 +1,24 @@
+{%- liquid
+  assign key = product.handle
+  assign title = product.title | downcase
+  if key == 'ap-belt' or title == 'a/p belt' or title == 'apsht belt'
+    assign key = 'ap-belt'
+  elsif key == 'apsht-cropped-set' or title contains 'cropped hoodie set'
+    assign key = 'apsht-cropped-set'
+  elsif key == 'ap-knit-balaclava' or title contains 'balaclava'
+    assign key = 'ap-knit-balaclava'
+  elsif key == 'where-is-my-money-tee' or title contains 'my money tee'
+    assign key = 'where-is-my-money-tee'
+  elsif key == 'mugshot-tee' or title contains 'mugshot tee'
+    assign key = 'mugshot-tee'
+  elsif key == 'soul-messenger-bag' or title contains 'messenger bag'
+    assign key = 'soul-messenger-bag'
+  elsif key == 'butterfly-bowling-bag' or title contains 'butterfly bowling'
+    assign key = 'butterfly-bowling-bag'
+  else
+    assign key = blank
+  endif
+  if key != blank
+    echo 'mockup-' | append: key | append: '.jpg' | asset_url
+  endif
+-%}

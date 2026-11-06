@@ -1,0 +1,87 @@
+{%- liquid
+  assign ap_url = '/collections/ap'
+  if settings.ap_collection != blank
+    assign ap_url = settings.ap_collection.url
+  endif
+  assign ds_url = '/collections/deadly-soul'
+  if settings.ds_collection != blank
+    assign ds_url = settings.ds_collection.url
+  endif
+-%}
+<section class="vs" data-vs aria-label="Choose your side">
+  <canvas class="vs__gl" aria-hidden="true"></canvas>
+  <div class="vs__slot" data-hoodie-slot aria-hidden="true"></div>
+
+  <div class="vs__title">
+    <p class="h-sub">{{ section.settings.kicker }}</p>
+    <h1 class="glitch" data-text="{{ section.settings.heading | escape }}">{{ section.settings.heading }}</h1>
+    <span class="vs__timer" data-vs-timer aria-hidden="true">30</span>
+  </div>
+
+  <div class="vs__ui">
+    <a class="vs__side vs__side--ap" href="{{ ap_url }}" data-cursor="Enter">
+      <div class="vs__p"><b>P1</b> {{ section.settings.ap_label }}</div>
+      <div class="vs__logo">{% render 'brand-logo', brand: 'ap', width: 500 %}</div>
+      <h2 class="vs__name">{{ settings.ap_name | default: 'A/P' }}</h2>
+      <p class="vs__tag">{{ section.settings.ap_tagline }}</p>
+      <div class="vs__stats" aria-hidden="true">
+        <div class="vs__stat"><span>Drip</span><i style="--v:{{ section.settings.ap_s1 }}%;--d:.1s"></i></div>
+        <div class="vs__stat"><span>Menace</span><i style="--v:{{ section.settings.ap_s2 }}%;--d:.2s"></i></div>
+        <div class="vs__stat"><span>Rarity</span><i style="--v:{{ section.settings.ap_s3 }}%;--d:.3s"></i></div>
+      </div>
+      <span class="btn vs__enter">{{ section.settings.ap_cta }} &#9654;</span>
+    </a>
+
+    <a class="vs__side vs__side--ds" href="{{ ds_url }}" data-cursor="Enter">
+      <div class="vs__p">{{ section.settings.ds_label }} <b>P2</b></div>
+      <div class="vs__logo">{% render 'brand-logo', brand: 'ds', width: 500 %}</div>
+      <h2 class="vs__name">{{ settings.ds_name | default: 'Deadly Soul' }}</h2>
+      <p class="vs__tag">{{ section.settings.ds_tagline }}</p>
+      <div class="vs__stats" aria-hidden="true">
+        <div class="vs__stat"><span>Drip</span><i style="--v:{{ section.settings.ds_s1 }}%;--d:.15s"></i></div>
+        <div class="vs__stat"><span>Allure</span><i style="--v:{{ section.settings.ds_s2 }}%;--d:.25s"></i></div>
+        <div class="vs__stat"><span>Rarity</span><i style="--v:{{ section.settings.ds_s3 }}%;--d:.35s"></i></div>
+      </div>
+      <span class="btn vs__enter">&#9664; {{ section.settings.ds_cta }}</span>
+    </a>
+  </div>
+
+  <div class="vs__hint" aria-hidden="true"><span class="kbd">&larr;</span><span class="kbd">&rarr;</span> choose <span class="kbd">Enter</span> select</div>
+  <div class="vs__flash" aria-hidden="true"></div>
+
+  {%- if section.settings.ticker != blank -%}
+    {%- assign words = section.settings.ticker | split: '|' -%}
+    <div class="vs__ticker marquee" aria-hidden="true">
+      <div class="marquee__track">
+        {%- for i in (1..2) -%}{%- for w in words -%}<span>{{ w | strip }}</span>{%- endfor -%}{%- for w in words -%}<span>{{ w | strip }}</span>{%- endfor -%}{%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Choose your side",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Two brands. One world." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose your side" },
+    { "type": "text", "id": "ticker", "label": "Ticker words (separate with |)", "default": "New drop live | Limited pieces | Two brands, one world | Choose your side" },
+    { "type": "header", "content": "Player 1: A/P" },
+    { "type": "text", "id": "ap_label", "label": "Label", "default": "Streets division" },
+    { "type": "textarea", "id": "ap_tagline", "label": "Tagline", "default": "Raw graffiti energy. Balaclavas, belts and heavyweight tees for people who move loud." },
+    { "type": "text", "id": "ap_cta", "label": "Button", "default": "Enter A/P" },
+    { "type": "range", "id": "ap_s1", "label": "Stat: Drip", "min": 10, "max": 100, "step": 1, "default": 92 },
+    { "type": "range", "id": "ap_s2", "label": "Stat: Menace", "min": 10, "max": 100, "step": 1, "default": 97 },
+    { "type": "range", "id": "ap_s3", "label": "Stat: Rarity", "min": 10, "max": 100, "step": 1, "default": 81 },
+    { "type": "header", "content": "Player 2: Deadly Soul" },
+    { "type": "text", "id": "ds_label", "label": "Label", "default": "Gothic division" },
+    { "type": "textarea", "id": "ds_tagline", "label": "Tagline", "default": "Soft colours, sharp edges. Butterflies, skulls and pieces with a dark heart." },
+    { "type": "text", "id": "ds_cta", "label": "Button", "default": "Enter Deadly Soul" },
+    { "type": "range", "id": "ds_s1", "label": "Stat: Drip", "min": 10, "max": 100, "step": 1, "default": 90 },
+    { "type": "range", "id": "ds_s2", "label": "Stat: Allure", "min": 10, "max": 100, "step": 1, "default": 98 },
+    { "type": "range", "id": "ds_s3", "label": "Stat: Rarity", "min": 10, "max": 100, "step": 1, "default": 86 }
+  ],
+  "presets": [{ "name": "Choose your side" }]
+}
+{% endschema %}

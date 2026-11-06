@@ -1,0 +1,10 @@
+{
+  "buildCommand": "mkdir -p public",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{Shopify-Themes/ap-x-deadly-soul-theme-1101/**,Shopify-Themes/volume-studio-shopify-theme/**,Shopify-Themes/local-preview/mock-store.json,product-mockups/png/**}"
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
+}

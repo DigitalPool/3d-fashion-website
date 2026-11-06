@@ -1,0 +1,10 @@
+<div class="page-head">
+  <div class="page-head__model">{% render 'model-spot', file: 'model-mugshot-tee.glb', label: 'the mugshot tee' %}</div>
+  <p class="h-sub">{{ article.published_at | date: '%B %d, %Y' }}</p><h1 class="h-display">{{ article.title }}</h1></div>
+<div class="page-body">
+  {%- if article.image -%}<div style="margin-bottom:30px">{{ article.image | image_url: width: 1800 | image_tag: loading: 'lazy' }}</div>{%- endif -%}
+  <div class="rte">{{ article.content }}</div>
+</div>
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

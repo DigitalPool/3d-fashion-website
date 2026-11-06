@@ -1,0 +1,167 @@
+{%- liquid
+  assign catalogue = section.settings.collection | default: collections.all
+  assign fit_url = section.settings.lookbook_url | default: '/pages/fit-lab'
+  assign hero_handles = ''
+  assign shown = 0
+  for block in section.blocks
+    if block.settings.product != blank
+      assign hero_handles = hero_handles | append: '|' | append: block.settings.product.handle | append: '|'
+    endif
+  endfor
+-%}
+<section class="vh" data-vh aria-label="Featured products">
+  <span class="vh__ghost" aria-hidden="true">{{ section.settings.ghost }}</span>
+  <div class="vh__slot" data-hoodie-slot aria-hidden="true"></div>
+
+  <div class="vh__rail">
+    <div class="vh__views" role="group" aria-label="Choose a product to view in 3D">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.product == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign model = block.settings.model -%}
+        {%- unless model contains '//' -%}{%- assign model = block.settings.model | asset_url -%}{%- endunless -%}
+        {%- assign shown = shown | plus: 1 -%}
+        <button type="button" data-vh-select="{{ block.id }}" data-model="{{ model | escape }}" data-scale="{{ block.settings.scale | divided_by: 100.0 }}" data-title="{{ block.settings.product.title | escape }}" aria-pressed="{% if shown == 1 %}true{% else %}false{% endif %}" aria-label="View {{ block.settings.product.title | escape }}">
+          <small>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</small>
+          <img src="{{ block.settings.thumb | asset_url }}" alt="" width="240" height="240">
+        </button>
+      {%- endfor -%}
+    </div>
+    <p class="vh__tagline">{{ section.settings.tagline | escape | newline_to_br }}</p>
+    {%- if section.settings.instagram != blank or section.settings.tiktok != blank or section.settings.youtube != blank -%}
+      <div class="vh__social">
+        {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">IG</a>{%- endif -%}
+        {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TT</a>{%- endif -%}
+        {%- if section.settings.youtube != blank -%}<a href="{{ section.settings.youtube }}" target="_blank" rel="noopener">YT</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- assign shown = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.settings.product == blank -%}{%- continue -%}{%- endif -%}
+    {%- assign shown = shown | plus: 1 -%}
+    <div class="vh__word" data-vh-item="{{ block.id }}" style="--len:{{ block.settings.word | size }}" aria-hidden="true"{% if shown > 1 %} hidden{% endif %}>{{ block.settings.word }}</div>
+    <div class="vh__copy" data-vh-item="{{ block.id }}"{% if shown > 1 %} hidden{% endif %}>
+      <p class="vh__kicker">{{ block.settings.kicker }}</p>
+      {% if shown == 1 %}<h1>{% else %}<h2 class="vh__title">{% endif %}{{ block.settings.heading | escape | newline_to_br }}{% if shown == 1 %}</h1>{% else %}</h2>{% endif %}
+      <p class="vh__intro">{{ block.settings.intro | default: block.settings.product.description | strip_html }}</p>
+      <a class="vh__watch" href="{{ fit_url }}"><i aria-hidden="true"></i><span>{{ section.settings.lookbook_label | escape | newline_to_br }}</span></a>
+    </div>
+  {%- endfor -%}
+
+  <aside class="vh__panel" aria-label="Selected product">
+    {%- if section.settings.badge != blank -%}<span class="vh__badge">{{ section.settings.badge }}</span>{%- endif -%}
+
+    {%- assign shown = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.product == blank -%}{%- continue -%}{%- endif -%}
+      {%- liquid
+        assign shown = shown | plus: 1
+        assign product = block.settings.product
+        assign current = product.selected_or_first_available_variant
+        assign colour_lower = block.settings.colour_name | downcase
+        assign option_lower = product.options.first | downcase
+        assign colour_option = false
+        if option_lower contains 'colo'
+          assign colour_option = true
+          for v in product.variants
+            assign v_lower = v.title | downcase
+            if v_lower == colour_lower
+              assign current = v
+            endif
+          endfor
+        endif
+      -%}
+      <div class="vh__buy" data-vh-item="{{ block.id }}"{% if shown > 1 %} hidden{% endif %}>
+        <p class="vh__price" data-vh-price>{{ current.price | money }}</p>
+        <p class="vh__name"><a href="{{ product.url }}">{{ product.title }}</a></p>
+        <div class="vh__field">
+          <span>Colour: {{ block.settings.colour_name }}</span>
+          <i class="vh__swatch" style="--swatch:{{ block.settings.colour_hex }}" aria-hidden="true"></i>
+        </div>
+        {%- unless product.has_only_default_variant or colour_option -%}
+          <div class="vh__field">
+            <span>{{ product.options.first }}:</span>
+            <div class="vh__sizes" role="group" aria-label="{{ product.options.first | escape }}">
+              {%- for v in product.variants -%}
+                <button type="button" data-vh-variant="{{ v.id }}" data-price="{{ v.price | money | escape }}" aria-pressed="{% if v == current %}true{% else %}false{% endif %}"{% unless v.available %} disabled{% endunless %}>{{ v.title }}</button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endunless -%}
+        <button type="button" class="vh__add" data-vh-add data-variant="{{ current.id }}"{% unless current.available %} disabled{% endunless %}><span>Add to bag</span><span aria-hidden="true">&#8599;</span></button>
+        <p class="vh__status" data-vh-status role="status"></p>
+      </div>
+    {%- endfor -%}
+
+    <ul class="vh__features">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>{{ section.settings.feature_1 }}</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>{{ section.settings.feature_2 }}</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3L3 7l3 3 2-1v12h8V9l2 1 3-3-5-4a4 4 0 0 1-8 0z"/></svg>{{ section.settings.feature_3 }}</li>
+    </ul>
+
+    <div class="vh__next" data-vh-next>
+      <div class="vh__next-track" data-vh-next-track>
+        {%- for p in catalogue.products limit: 12 -%}
+          {%- assign marker = '|' | append: p.handle | append: '|' -%}
+          {%- unless hero_handles contains marker -%}
+            {%- capture next_mockup -%}{% render 'product-mockup', product: p %}{%- endcapture -%}
+            <a class="vh__next-card" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+              {%- if next_mockup != blank -%}
+                <img src="{{ next_mockup | strip | escape }}" alt="" width="300" height="400" loading="lazy">
+              {%- elsif p.featured_image -%}
+                {{ p.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
+              {%- endif -%}
+            </a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+      <div class="vh__next-bar">
+        <span>Next item</span>
+        <span class="vh__next-count" data-vh-next-count></span>
+        <button type="button" data-vh-next-prev aria-label="Previous items">&larr;</button>
+        <button type="button" data-vh-next-next aria-label="Next items">&rarr;</button>
+      </div>
+    </div>
+  </aside>
+</section>
+
+{% schema %}
+{
+  "name": "Volume hero",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Used for the next items. Leave empty for all products." },
+    { "type": "text", "id": "ghost", "label": "Background word", "default": "VOLUME" },
+    { "type": "textarea", "id": "lookbook_label", "label": "Lookbook link text", "default": "WATCH\nLOOKBOOK" },
+    { "type": "text", "id": "lookbook_url", "label": "Lookbook link", "default": "/pages/fit-lab" },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "STREET\nSTYLE\nFOREVER" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "New arrival" },
+    { "type": "text", "id": "feature_1", "label": "Feature 1", "default": "Premium fabric" },
+    { "type": "text", "id": "feature_2", "label": "Feature 2", "default": "All-season comfort" },
+    { "type": "text", "id": "feature_3", "label": "Feature 3", "default": "Streetwear design" },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
+    { "type": "url", "id": "youtube", "label": "YouTube URL" }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Hero product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "word", "label": "Vertical word", "default": "HOODIES" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Next generation" },
+        { "type": "textarea", "id": "heading", "label": "Heading", "default": "STREET\nHOODIE" },
+        { "type": "text", "id": "intro", "label": "Intro", "info": "Leave empty to use the product description." },
+        { "type": "text", "id": "colour_name", "label": "Colour shown", "info": "If the product has colour options, this is the one added to the bag.", "default": "Black" },
+        { "type": "color", "id": "colour_hex", "label": "Colour swatch", "default": "#111111" },
+        { "type": "text", "id": "model", "label": "3D model", "info": "A .glb file name in the theme's assets, or a full link to one.", "default": "black-cropped-hoodie.glb" },
+        { "type": "text", "id": "thumb", "label": "Thumbnail", "info": "An image file name in the theme's assets.", "default": "hoodie-view-front.webp" },
+        { "type": "range", "id": "scale", "label": "Model size", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Volume hero" }]
+}
+{% endschema %}

@@ -1,0 +1,145 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign brand = 'ap'
+  for c in product.collections
+    if settings.ds_collection != blank and c.handle == settings.ds_collection.handle
+      assign brand = 'ds'
+    elsif c.handle contains 'deadly'
+      assign brand = 'ds'
+    endif
+  endfor
+-%}
+{%- capture mockup -%}{% render 'product-mockup', product: product %}{%- endcapture -%}
+{%- assign model_key = '' -%}
+{%- if mockup != blank -%}
+  {%- assign model_key = mockup | strip | split: 'mockup-' | last | split: '.jpg' | first -%}
+{%- endif -%}
+<script>document.body.dataset.side = {{ brand | json }};</script>
+<section class="pdp">
+  <div class="pdp__media">
+    <div class="pdp__thumbs">
+      {%- if mockup != blank -%}
+        <button type="button" class="pdp__thumb-3d is-active" data-thumb-3d aria-label="Show 3D view"><img src="{{ mockup | escape }}" alt="" width="80" height="100"><span>3D</span></button>
+        <button type="button" data-thumb="{{ mockup | escape }}" aria-label="Show studio mockup"><img src="{{ mockup | escape }}" loading="lazy" alt="" width="80" height="100"></button>
+        {% render 'product-worn-thumbs', key: model_key, title: product.title %}
+      {%- endif -%}
+      {%- for m in product.media -%}
+        {%- if mockup != blank and m.id == product.featured_media.id -%}{%- continue -%}{%- endif -%}
+        {%- if m.media_type == 'image' -%}
+          <button type="button" data-thumb="{{ m | image_url: width: 1600 }}" class="{% if mockup == blank and m.id == product.featured_media.id %}is-active{% endif %}" aria-label="Show image {{ forloop.index }}">
+            {{ m | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="pdp__stage corners" data-pdp-stage>
+      <span class="stage-tag">3D STUDIO</span>
+      <span class="stage-tag stage-tag--r">{{ product.vendor | upcase }}</span>
+      {%- if mockup != blank -%}
+        <img src="{{ mockup | escape }}" alt="{{ product.title | escape }} studio mockup" loading="eager" fetchpriority="high" width="600" height="800">
+      {%- elsif product.featured_media -%}
+        {{ product.featured_media | image_url: width: 1600 | image_tag: widths: '600,900,1200,1600', sizes: '(min-width: 900px) 55vw, 100vw', alt: product.title, loading: 'eager', fetchpriority: 'high' }}
+      {%- else -%}
+        {{ 'product-apparel-1' | placeholder_svg_tag }}
+      {%- endif -%}
+      {%- if model_key != '' -%}
+        <div class="pdp__model" data-pdp-model data-cursor="Rotate" role="img" tabindex="0" aria-label="3D view of {{ product.title | escape }}. Drag, or use the arrow keys, to rotate it.">
+          <canvas aria-hidden="true"></canvas>
+          <div class="model-tools">
+            <span data-model-hint>Drag to rotate</span>
+            <button type="button" data-model-zoom="out" aria-label="Zoom out">&minus;</button>
+            <button type="button" data-model-zoom="in" aria-label="Zoom in">+</button>
+            <button type="button" data-model-zoom="reset" aria-label="Reset view">&#8634;</button>
+          </div>
+          <script type="application/json" data-pdp-models>{% render 'product-models-json', key: model_key %}</script>
+        </div>
+        <p class="pdp__note" data-pdp-note hidden></p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="pdp__info" data-product-form>
+    <script type="application/json">
+      {
+        "selected": {{ current.id | json }},
+        "options": {{ product.options | json }},
+        "variants": [
+          {%- for v in product.variants -%}
+            { "id": {{ v.id }}, "available": {{ v.available | json }}, "price": {{ v.price | json }}, "compare_at_price": {{ v.compare_at_price | default: 0 | json }},
+              "option1": {{ v.option1 | json }}, "option2": {{ v.option2 | json }}, "option3": {{ v.option3 | json }},
+              "featured_image": {% if v.featured_media %}{{ v.featured_media | image_url: width: 1600 | json }}{% else %}null{% endif %} }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+    <p class="h-sub">{% if brand == 'ds' %}{{ settings.ds_name | default: 'Deadly Soul' }}{% else %}{{ settings.ap_name | default: 'A/P' }}{% endif %} · {{ product.type | default: 'Item' }}</p>
+    <h1 class="pdp__title">{{ product.title }}</h1>
+    <div class="price" data-price>{{ current.price | money }}{% if current.compare_at_price > current.price %}<s>{{ current.compare_at_price | money }}</s>{% endif %}</div>
+
+    {%- unless product.has_only_default_variant -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign idx = forloop.index0 -%}
+        <fieldset class="pdp__opt">
+          <legend>{{ option.name }}</legend>
+          <div class="chips">
+            {%- for value in option.values -%}
+              <button type="button" class="chip" data-opt data-idx="{{ idx }}" data-value="{{ value | escape }}" aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}">{{ value }}</button>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endfor -%}
+    {%- endunless -%}
+
+    <div class="pdp__buy">
+      <div class="qty">
+        <button type="button" data-qty-step="-1" aria-label="Decrease quantity">&minus;</button>
+        <label class="visually-hidden" for="qty-{{ section.id }}">Quantity</label>
+        <input id="qty-{{ section.id }}" type="number" min="1" value="1" data-qty>
+        <button type="button" data-qty-step="1" aria-label="Increase quantity">+</button>
+      </div>
+      <button type="button" class="btn" data-add data-label="{{ section.settings.add_label | escape }}" {% unless current.available %}disabled{% endunless %} data-cursor="Add">
+        {%- if current.available -%}{{ section.settings.add_label }}{%- else -%}Sold out{%- endif -%}
+      </button>
+    </div>
+    <div class="pdp__msg" data-msg role="status"></div>
+    <noscript>
+      {%- form 'product', product -%}
+        <select name="id">{% for v in product.variants %}<option value="{{ v.id }}"{% if v == current %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title }} - {{ v.price | money }}</option>{% endfor %}</select>
+        <button type="submit" class="btn">Add to bag</button>
+      {%- endform -%}
+    </noscript>
+
+    {%- if product.description != blank -%}
+      <div class="pdp__desc rte">{{ product.description }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.settings.show_related -%}
+  {%- assign rel = product.collections.first -%}
+  {%- if rel and rel.products_count > 1 -%}
+    <section class="inventory">
+      <div class="inventory__head"><h2 class="h-display reveal">{{ section.settings.related_heading }}</h2><a class="btn btn--ghost" href="{{ rel.url }}">See all</a></div>
+      <div class="grid">
+        {%- assign shown = 0 -%}
+        {%- for p in rel.products -%}
+          {%- if p.id != product.id and shown < 4 -%}
+            {% render 'product-card', product: p %}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to bag" },
+    { "type": "checkbox", "id": "show_related", "label": "Show more from this collection", "default": true },
+    { "type": "text", "id": "related_heading", "label": "Related heading", "default": "Complete the look" }
+  ]
+}
+{% endschema %}

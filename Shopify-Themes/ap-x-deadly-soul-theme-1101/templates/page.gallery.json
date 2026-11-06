@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "world": { "type": "world", "settings": { "brand": "ap", "stage": "reel" } },
+    "gallery": { "type": "gallery-3d", "settings": { "show_heading": false } }
+  },
+  "order": ["world", "gallery"]
+}

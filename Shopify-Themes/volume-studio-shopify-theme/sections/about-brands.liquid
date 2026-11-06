@@ -1,0 +1,83 @@
+<div class="about">
+  <div class="about__intro">
+    <p class="h-sub reveal">{{ section.settings.kicker }}</p>
+    <h1 class="h-display reveal" data-delay="80"><span>{{ section.settings.line_1 }}</span><span class="o">{{ section.settings.line_2 }}</span></h1>
+    {%- if section.settings.intro != blank -%}<div class="rte reveal" data-delay="160">{{ section.settings.intro }}</div>{%- endif -%}
+  </div>
+
+  {%- for b in (1..2) -%}
+    {%- liquid
+      if b == 1
+        assign key = 'ap'
+        assign name = settings.ap_name | default: 'A/P'
+        assign img = section.settings.ap_image
+        assign text = section.settings.ap_text
+        assign est = section.settings.ap_est
+        assign cls = section.settings.ap_class
+        assign url = '/collections/ap'
+        if settings.ap_collection != blank
+          assign url = settings.ap_collection.url
+        endif
+      else
+        assign key = 'ds'
+        assign name = settings.ds_name | default: 'Deadly Soul'
+        assign img = section.settings.ds_image
+        assign text = section.settings.ds_text
+        assign est = section.settings.ds_est
+        assign cls = section.settings.ds_class
+        assign url = '/collections/deadly-soul'
+        if settings.ds_collection != blank
+          assign url = settings.ds_collection.url
+        endif
+      endif
+    -%}
+    <section class="bio bio--{{ key }}">
+      <div class="bio__media">
+        {%- if img != blank -%}
+          {{ img | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600,900,1200,1600', sizes: '(min-width: 860px) 50vw, 100vw' }}
+        {%- else -%}
+          {%- if key == 'ds' -%}
+            <div class="bio__spot">{% render 'model-spot', file: 'model-butterfly-bowling-bag.glb', label: 'the butterfly bowling bag' %}</div>
+          {%- else -%}
+            <div class="bio__spot">{% render 'model-spot', file: 'black-cropped-hoodie.glb', label: 'the black cropped hoodie' %}</div>
+          {%- endif -%}
+          <div class="bio__mark">{% render 'brand-logo', brand: key, width: 200 %}</div>
+        {%- endif -%}
+      </div>
+      <div class="bio__body">
+        <p class="h-sub reveal">Brand 0{{ b }}</p>
+        <h2 class="bio__name reveal" data-delay="60">{{ name }}</h2>
+        <dl class="bio__card reveal" data-delay="120">
+          <dt>CLASS</dt><dd>{{ cls }}</dd>
+          <dt>EST.</dt><dd>{{ est }}</dd>
+          <dt>STATUS</dt><dd>ACTIVE</dd>
+        </dl>
+        <div class="rte reveal" data-delay="180">{{ text }}</div>
+        <div class="reveal" data-delay="240"><a class="btn" href="{{ url }}">Shop {{ name }} &rarr;</a></div>
+      </div>
+    </section>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "About both brands",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The story" },
+    { "type": "text", "id": "line_1", "label": "Headline line 1", "default": "Two brands." },
+    { "type": "text", "id": "line_2", "label": "Headline line 2 (outlined)", "default": "One world." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Write the story of how both brands started and what connects them.</p>" },
+    { "type": "header", "content": "A/P" },
+    { "type": "image_picker", "id": "ap_image", "label": "Image" },
+    { "type": "text", "id": "ap_class", "label": "Class", "default": "STREETWEAR // GRAFFITI" },
+    { "type": "text", "id": "ap_est", "label": "Established", "default": "2024" },
+    { "type": "richtext", "id": "ap_text", "label": "Text", "default": "<p>Tell the A/P story here: where it comes from, who it's for and what it stands for.</p>" },
+    { "type": "header", "content": "Deadly Soul" },
+    { "type": "image_picker", "id": "ds_image", "label": "Image" },
+    { "type": "text", "id": "ds_class", "label": "Class", "default": "GOTHIC // ACCESSORIES" },
+    { "type": "text", "id": "ds_est", "label": "Established", "default": "2024" },
+    { "type": "richtext", "id": "ds_text", "label": "Text", "default": "<p>Tell the Deadly Soul story here: the butterfly skull, the mood and the people who wear it.</p>" }
+  ],
+  "presets": [{ "name": "About both brands" }]
+}
+{% endschema %}

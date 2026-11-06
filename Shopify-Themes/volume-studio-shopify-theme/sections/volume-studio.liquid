@@ -1,0 +1,112 @@
+{%- assign catalogue = section.settings.collection | default: collections.all -%}
+{%- assign first = section.settings.featured_product -%}
+{%- if first == blank -%}
+  {%- for p in catalogue.products limit: 24 -%}
+    {%- assign title_lower = p.title | downcase -%}
+    {%- if p.handle == 'apsht-cropped-set' or title_lower contains 'cropped hoodie set' -%}{%- assign first = p -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if first == blank -%}{%- assign first = catalogue.products.first -%}{%- endif -%}
+{%- endif -%}
+<section class="volume" data-volume aria-label="Volume Studio">
+  <div class="volume__hero">
+    <div class="volume__copy">
+      <p class="volume__eyebrow"><i></i> A/P × DEADLY SOUL <span>STUDY 01</span></p>
+      <h1>{{ section.settings.heading | escape | newline_to_br }}</h1>
+      <p class="volume__intro">{{ section.settings.intro | escape }}</p>
+      <a class="volume__jump" href="#volume-index">Explore the collection <span aria-hidden="true">↘</span></a>
+    </div>
+
+    <div class="volume__stage" data-volume-stage>
+      <span class="volume__ghost" aria-hidden="true">VOLUME</span>
+      <div class="volume__orbit" aria-hidden="true"></div>
+      <span class="volume__cross volume__cross--tl" aria-hidden="true">+</span>
+      <span class="volume__cross volume__cross--br" aria-hidden="true">+</span>
+      <div class="volume__viewport" data-volume-viewport>
+        {%- capture poster -%}{% render 'product-mockup', product: first %}{%- endcapture -%}
+        {%- if poster != blank -%}
+          <img data-volume-poster src="{{ poster | strip | escape }}" alt="{{ first.title | escape }}" width="600" height="800" fetchpriority="high">
+        {%- elsif first.featured_image -%}
+          {{ first.featured_image | image_url: width: 900 | image_tag: loading: 'eager', alt: first.title }}
+        {%- else -%}
+          <img data-volume-poster src="{{ 'mockup-apsht-cropped-set.jpg' | asset_url }}" alt="APSHT cropped set studio mockup" width="600" height="800" fetchpriority="high">
+        {%- endif -%}
+        <canvas data-volume-canvas tabindex="0" aria-label="Interactive product model. Drag or use the arrow keys to rotate." hidden></canvas>
+      </div>
+      <div class="volume__tools" data-volume-tools hidden>
+        <button type="button" data-orbit-action="left" aria-label="Rotate left">↶</button>
+        <span>DRAG TO ROTATE</span>
+        <button type="button" data-orbit-action="right" aria-label="Rotate right">↷</button>
+        <button type="button" data-orbit-action="zoom-out" aria-label="Zoom out">−</button>
+        <button type="button" data-orbit-action="zoom-in" aria-label="Zoom in">+</button>
+        <button type="button" data-orbit-action="reset" aria-label="Reset view">↺</button>
+      </div>
+      <p class="volume__angle" data-volume-angle aria-hidden="true">STUDIO VIEW</p>
+    </div>
+
+    <aside class="volume__purchase" aria-label="Featured product">
+      <p class="volume__panel-kicker">SELECTED OBJECT <span data-volume-number>01</span></p>
+      <h2 data-volume-name>{{ first.title | default: 'The collection' | escape }}</h2>
+      <p class="volume__price" data-volume-price>{% if first %}{{ first.selected_or_first_available_variant.price | money }}{% endif %}</p>
+      <p class="volume__note" data-volume-note></p>
+      <div class="volume__parts" data-volume-parts hidden></div>
+      <div data-volume-options></div>
+      {%- if first -%}
+        <form method="post" action="{{ routes.cart_add_url }}" data-volume-form>
+          <input type="hidden" name="id" value="{{ first.selected_or_first_available_variant.id }}">
+          <button class="volume__add" type="submit" {% unless first.selected_or_first_available_variant.available %}disabled{% endunless %}>Add to bag <span aria-hidden="true">↗</span></button>
+        </form>
+        <a class="volume__details" data-volume-details href="{{ first.url }}">Product details ↗</a>
+      {%- else -%}
+        <a class="volume__add" href="{{ routes.all_products_collection_url }}">Browse catalogue ↗</a>
+      {%- endif -%}
+      <p data-volume-status role="status"></p>
+    </aside>
+  </div>
+  {%- if catalogue.products.size > 0 -%}
+    <div class="volume__rail" data-volume-rail aria-label="Choose a featured product"></div>
+  {%- endif -%}
+  <script type="application/json" data-volume-data>
+    {
+      "featured": {{ first.handle | default: '' | json }},
+      "prints": {
+        "where-is-my-money-tee": {{ 'print-where-is-my-money-tee.jpg' | asset_url | json }},
+        "mugshot-tee": {{ 'print-mugshot-tee.jpg' | asset_url | json }},
+        "soul-messenger-bag": {{ 'print-soul-messenger-bag.jpg' | asset_url | json }},
+        "butterfly-bowling-bag": {{ 'print-butterfly-bowling-bag.jpg' | asset_url | json }}
+      },
+      "products": [
+        {%- if first -%}
+          {% render 'look-json', p: first %}
+          {%- for p in catalogue.products limit: 24 -%}
+            {%- unless p.id == first.id -%},{% render 'look-json', p: p %}{%- endunless -%}
+          {%- endfor -%}
+        {%- endif -%}
+      ]
+    }
+  </script>
+</section>
+
+<section class="volume-index" id="volume-index">
+  <header><div><p>01 / THE COLLECTION</p><h2>THE OBJECT INDEX.</h2></div><a href="{{ routes.all_products_collection_url }}">View all products ↗</a></header>
+  <div class="volume-index__grid">
+    {%- for p in catalogue.products limit: 8 -%}{% render 'product-card', product: p %}{%- endfor -%}
+  </div>
+</section>
+
+<section class="volume-editorial">
+  <img src="{{ 'volume-editorial.webp' | asset_url }}" alt="A/P × Deadly Soul streetwear editorial" width="1500" height="1000" loading="lazy">
+  <div><p>02 / FIELD NOTES</p><h2>AFTER<br>HOURS.</h2><a href="{{ routes.all_products_collection_url }}">Shop the collection ↗</a></div>
+</section>
+
+{% schema %}
+{
+  "name": "Volume Studio",
+  "settings": [
+    { "type": "textarea", "id": "heading", "label": "Headline", "default": "FORM\nIN MOTION." },
+    { "type": "text", "id": "intro", "label": "Intro", "default": "Streetwear with a shape of its own. Explore the drop from every angle." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "product", "id": "featured_product", "label": "Opening product", "info": "Choose a product from the selected collection." }
+  ],
+  "presets": [{ "name": "Volume Studio" }]
+}
+{% endschema %}

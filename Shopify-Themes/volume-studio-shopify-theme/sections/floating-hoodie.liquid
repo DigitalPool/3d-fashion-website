@@ -1,0 +1,19 @@
+{%- assign model = section.settings.model_url | default: '' -%}
+{%- if model == '' -%}{%- assign model = 'black-cropped-hoodie.glb' | asset_url -%}{%- endif -%}
+<div class="hoodie" data-hoodie data-model="{{ model | escape }}">
+  <canvas class="hoodie__gl" aria-hidden="true"></canvas>
+  <div class="hoodie__hit" data-hoodie-hit data-cursor="Rotate" role="img" tabindex="0" aria-label="3D model of the black cropped hoodie. Drag, or use the left and right arrow keys, to rotate it." hidden>
+    <span class="hoodie__hint" data-hoodie-hint aria-hidden="true">Drag to rotate</span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Floating 3D hoodie",
+  "settings": [
+    { "type": "paragraph", "content": "Follows the page and lands in a spot in each section that supports it. Add this section once, on the home page." },
+    { "type": "text", "id": "model_url", "label": "Model URL (optional)", "info": "Direct link to a .glb file. Leave empty to use the hoodie included with the theme." }
+  ],
+  "presets": [{ "name": "Floating 3D hoodie" }]
+}
+{% endschema %}

@@ -1,0 +1,423 @@
+{
+  "_note": "Fake store data for the local preview only. Products come from Source/ap-deadly-soul-products.csv. Nothing here is uploaded to Shopify. Edit freely; pages reload on save.",
+  "shop": {
+    "name": "A/P x Deadly Soul",
+    "description": "Two brands. One world.",
+    "money_format": "${{amount}}",
+    "currency": "USD",
+    "url": "http://localhost"
+  },
+  "collections": [
+    {
+      "handle": "ap",
+      "title": "A/P",
+      "description": ""
+    },
+    {
+      "handle": "deadly-soul",
+      "title": "Deadly Soul",
+      "description": ""
+    }
+  ],
+  "products": [
+    {
+      "handle": "where-is-my-money-tee",
+      "title": "Where Da F**k Is My Money Tee",
+      "description": "<p>Black A/P graphic tee with the WHERE DA F**K IS MY MONEY print.</p>",
+      "vendor": "A/P",
+      "type": "T-Shirt",
+      "tags": [
+        "ap",
+        "tee"
+      ],
+      "option_name": "Size",
+      "collection": "ap",
+      "images": [
+        "/assets/mockup-where-is-my-money-tee.jpg"
+      ],
+      "variants": [
+        {
+          "title": "S",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "where-is-my-money-tee-s"
+        },
+        {
+          "title": "M",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "where-is-my-money-tee-m"
+        },
+        {
+          "title": "L",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "where-is-my-money-tee-l"
+        },
+        {
+          "title": "XL",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "where-is-my-money-tee-xl"
+        },
+        {
+          "title": "XXL",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "where-is-my-money-tee-xxl"
+        }
+      ]
+    },
+    {
+      "handle": "ap-knit-balaclava",
+      "title": "A/P Knit Balaclava",
+      "description": "<p>Ribbed knit balaclava with embroidered A/P patch and teeth detail.</p>",
+      "vendor": "A/P",
+      "type": "Headwear",
+      "tags": [
+        "ap",
+        "balaclava"
+      ],
+      "option_name": "Colour",
+      "collection": "ap",
+      "images": [
+        "/assets/mockup-ap-knit-balaclava.jpg",
+        "/mock-media/mockup-ap-knit-balaclava.png",
+        "/mock-media/mockup-ap-knit-balaclava-cream.png"
+      ],
+      "variants": [
+        {
+          "title": "Black",
+          "price": "35.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-knit-balaclava-black",
+          "image": "/mock-media/mockup-ap-knit-balaclava.png"
+        },
+        {
+          "title": "Cream",
+          "price": "35.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-knit-balaclava-cream",
+          "image": "/mock-media/mockup-ap-knit-balaclava-cream.png"
+        }
+      ]
+    },
+    {
+      "handle": "apsht-cropped-set",
+      "title": "APSHT Cropped Hoodie Set",
+      "description": "<p>Cropped APSHT hoodie with matching wide-leg striped sweatpants.</p>",
+      "vendor": "A/P",
+      "type": "Set",
+      "tags": [
+        "ap",
+        "set"
+      ],
+      "option_name": "Size",
+      "collection": "ap",
+      "images": [
+        "/assets/mockup-apsht-cropped-set.jpg"
+      ],
+      "variants": [
+        {
+          "title": "XS",
+          "price": "95.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-cropped-set-xs"
+        },
+        {
+          "title": "S",
+          "price": "95.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-cropped-set-s"
+        },
+        {
+          "title": "M",
+          "price": "95.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-cropped-set-m"
+        },
+        {
+          "title": "L",
+          "price": "95.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-cropped-set-l"
+        },
+        {
+          "title": "XL",
+          "price": "95.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-cropped-set-xl"
+        }
+      ]
+    },
+    {
+      "handle": "ap-belt",
+      "title": "A/P Belt",
+      "description": "<p>A/P buckle belt, 36 inches total length. Available in eight colours.</p>",
+      "vendor": "A/P",
+      "type": "Belt",
+      "tags": [
+        "ap",
+        "belt"
+      ],
+      "option_name": "Colour",
+      "collection": "ap",
+      "images": [
+        "/assets/mockup-ap-belt.jpg",
+        "/mock-media/ap-belt-8-colors/ap-belt-black.png",
+        "/mock-media/ap-belt-8-colors/ap-belt-white.png",
+        "/mock-media/ap-belt-8-colors/ap-belt-red.png",
+        "/mock-media/ap-belt-8-colors/ap-belt-blue.png",
+        "/mock-media/ap-belt-8-colors/ap-belt-brown.png",
+        "/mock-media/ap-belt-8-colors/ap-belt-gray.png",
+        "/mock-media/ap-belt-8-colors/ap-belt-green.png",
+        "/mock-media/ap-belt-8-colors/ap-belt-pink.png"
+      ],
+      "variants": [
+        {
+          "title": "Black",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-black",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-black.png"
+        },
+        {
+          "title": "White",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-white",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-white.png"
+        },
+        {
+          "title": "Red",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-red",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-red.png"
+        },
+        {
+          "title": "Blue",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-blue",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-blue.png"
+        },
+        {
+          "title": "Brown",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-brown",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-brown.png"
+        },
+        {
+          "title": "Gray",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-gray",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-gray.png"
+        },
+        {
+          "title": "Green",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-green",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-green.png"
+        },
+        {
+          "title": "Pink",
+          "price": "55.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "ap-belt-pink",
+          "image": "/mock-media/ap-belt-8-colors/ap-belt-pink.png"
+        }
+      ]
+    },
+    {
+      "handle": "mugshot-tee",
+      "title": "Deadly Soul Mugshot Tee",
+      "description": "<p>White tee with the Deadly Soul mugshot print: charged with excessive attitude and property damage.</p>",
+      "vendor": "Deadly Soul",
+      "type": "T-Shirt",
+      "tags": [
+        "deadly-soul",
+        "tee"
+      ],
+      "option_name": "Size",
+      "collection": "deadly-soul",
+      "images": [
+        "/assets/mockup-mugshot-tee.jpg"
+      ],
+      "variants": [
+        {
+          "title": "S",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "mugshot-tee-s"
+        },
+        {
+          "title": "M",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "mugshot-tee-m"
+        },
+        {
+          "title": "L",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "mugshot-tee-l"
+        },
+        {
+          "title": "XL",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "mugshot-tee-xl"
+        },
+        {
+          "title": "XXL",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "mugshot-tee-xxl"
+        }
+      ]
+    },
+    {
+      "handle": "butterfly-bowling-bag",
+      "title": "Deadly Soul Butterfly Bowling Bag",
+      "description": "<p>Pink bowling bag with embroidered butterfly skull and Deadly Soul script, finished with a tied silk scarf handle.</p>",
+      "vendor": "Deadly Soul",
+      "type": "Bag",
+      "tags": [
+        "deadly-soul",
+        "bag"
+      ],
+      "option_name": "Title",
+      "collection": "deadly-soul",
+      "images": [
+        "/assets/mockup-butterfly-bowling-bag.jpg"
+      ],
+      "variants": [
+        {
+          "title": "Default Title",
+          "price": "120.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "butterfly-bowling-bag"
+        }
+      ]
+    },
+    {
+      "handle": "soul-messenger-bag",
+      "title": "Deadly Soul Messenger Bag",
+      "description": "<p>Black messenger bag with skeleton and butterfly artwork and Deadly Soul lettering.</p>",
+      "vendor": "Deadly Soul",
+      "type": "Bag",
+      "tags": [
+        "deadly-soul",
+        "bag"
+      ],
+      "option_name": "Title",
+      "collection": "deadly-soul",
+      "images": [
+        "/assets/mockup-soul-messenger-bag.jpg"
+      ],
+      "variants": [
+        {
+          "title": "Default Title",
+          "price": "110.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "soul-messenger-bag"
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "handle": "about",
+      "title": "About",
+      "template_suffix": "about",
+      "content": ""
+    },
+    {
+      "handle": "fit-lab",
+      "title": "Fit Lab",
+      "template_suffix": "fit-lab",
+      "content": ""
+    },
+    {
+      "handle": "gallery",
+      "title": "Gallery",
+      "template_suffix": "gallery",
+      "content": ""
+    },
+    {
+      "handle": "shipping",
+      "title": "Shipping (placeholder page)",
+      "template_suffix": null,
+      "content": "<p>Placeholder text for previewing the default page template.</p>"
+    }
+  ],
+  "blog": {
+    "handle": "news",
+    "title": "News (placeholder blog)",
+    "articles": [
+      {
+        "handle": "first-drop",
+        "title": "Placeholder article one",
+        "published_at": "2026-10-01",
+        "image": "/assets/mockup-mugshot-tee.jpg",
+        "content": "<p>Placeholder text for previewing the article template.</p>"
+      },
+      {
+        "handle": "second-drop",
+        "title": "Placeholder article two",
+        "published_at": "2026-10-15",
+        "image": null,
+        "content": "<p>Placeholder text for previewing the article template.</p>"
+      }
+    ]
+  },
+  "policies": [
+    {
+      "title": "Refund policy",
+      "url": "/policies/refund-policy"
+    },
+    {
+      "title": "Privacy policy",
+      "url": "/policies/privacy-policy"
+    },
+    {
+      "title": "Terms of service",
+      "url": "/policies/terms-of-service"
+    },
+    {
+      "title": "Shipping policy",
+      "url": "/policies/shipping-policy"
+    }
+  ]
+}

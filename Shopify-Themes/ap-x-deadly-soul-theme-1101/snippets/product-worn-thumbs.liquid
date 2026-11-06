@@ -1,0 +1,32 @@
+{%- comment -%} Thumbnails of the models wearing a product. Accepts: key, title. Format: image:look name {%- endcomment -%}
+{%- liquid
+  assign looks = ''
+  case key
+    when 'where-is-my-money-tee'
+      assign looks = 'cutout-where-is-my-money-tee.png:Money Talk|cutout-pink-hour.png:Pink Hour|cutout-midnight-run.png:Midnight Run'
+    when 'mugshot-tee'
+      assign looks = 'cutout-mugshot-tee.png:Case File|cutout-featured-fit.png:Saint Soul|cutout-mugshot-incognito.png:Mugshot Incognito'
+    when 'ap-knit-balaclava'
+      assign looks = 'cutout-ap-knit-balaclava.png:No Face|cutout-featured-fit.png:Saint Soul|cutout-mugshot-incognito.png:Mugshot Incognito'
+    when 'ap-belt'
+      assign looks = 'cutout-ap-belt.png:Chrome Signal|cutout-featured-fit.png:Saint Soul'
+    when 'butterfly-bowling-bag'
+      assign looks = 'cutout-butterfly-bowling-bag.png:Butterfly Effect|cutout-pink-hour.png:Pink Hour'
+    when 'soul-messenger-bag'
+      assign looks = 'cutout-soul-messenger-bag.png:Night Courier|cutout-featured-fit.png:Saint Soul|cutout-midnight-run.png:Midnight Run'
+    when 'apsht-cropped-set'
+      assign looks = 'cutout-apsht-cropped-set.png:Off the Clock'
+  endcase
+  assign kind = ''
+  if key == 'apsht-cropped-set'
+    assign kind = 'On model'
+  endif
+  assign look_list = looks | split: '|'
+-%}
+{%- for look in look_list -%}
+  {%- assign parts = look | split: ':' -%}
+  {%- assign src = parts[0] | asset_url -%}
+  <button type="button" data-thumb="{{ src | escape }}" data-note="{% if kind != '' %}{{ kind }} · {% endif %}{{ parts[1] | escape }}" aria-label="Show {{ title | escape }} worn in {{ parts[1] | escape }}">
+    <img src="{{ src | escape }}" loading="lazy" alt="" width="80" height="100">
+  </button>
+{%- endfor -%}

@@ -1,0 +1,6 @@
+<div class="photo-stage" data-photo-stage{% if empty != blank %} data-photo-empty="{{ empty | escape }}"{% endif %}>
+  <div class="photo-stage__frame" data-photo-frame></div>
+  <div class="photo-stage__nav" data-photo-nav role="group" aria-label="Photo and video views" hidden></div>
+  <button class="photo-stage__inspect" type="button" data-photo-inspect hidden>⌕ Inspect / zoom</button>
+  <p class="photo-stage__caption" data-photo-caption aria-live="polite"></p>
+</div>

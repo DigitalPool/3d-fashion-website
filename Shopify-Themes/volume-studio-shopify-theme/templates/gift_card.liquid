@@ -1,0 +1,15 @@
+{%- layout none -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gift card &ndash; {{ shop.name }}</title>{{ 'base.css' | asset_url | stylesheet_tag }}{{ 'volume.css' | asset_url | stylesheet_tag }}{{ 'volume-pages.css' | asset_url | stylesheet_tag }}{{ content_for_header }}</head>
+<body data-volume-theme>
+  <div class="page-head" style="text-align:center;justify-items:center;min-height:90vh;align-content:center">
+    <p class="h-sub">{{ shop.name }}</p>
+    <h1 class="h-display">{{ gift_card.initial_value | money_without_trailing_zeros }}</h1>
+    <p class="rte">Gift card code</p>
+    <div class="panel" style="padding:16px 24px;font:400 28px var(--f-crt);letter-spacing:.2em">{{ gift_card.code | format_code }}</div>
+    {%- if gift_card.balance != gift_card.initial_value -%}<p class="rte">Balance: {{ gift_card.balance | money }}</p>{%- endif -%}
+    <a class="btn" href="{{ shop.url }}">Start shopping</a>
+  </div>
+</body>
+</html>

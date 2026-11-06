@@ -1,0 +1,50 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "AP x Deadly Soul",
+    "theme_version": "1.0.0",
+    "theme_author": "DigitalPool",
+    "theme_documentation_url": "https://www.fiverr.com",
+    "theme_support_url": "https://www.fiverr.com"
+  },
+  {
+    "name": "Brands",
+    "settings": [
+      { "type": "header", "content": "A/P" },
+      { "type": "text", "id": "ap_name", "label": "Name", "default": "A/P" },
+      { "type": "image_picker", "id": "ap_logo", "label": "Logo", "info": "Transparent PNG or SVG. White or light logo works best." },
+      { "type": "collection", "id": "ap_collection", "label": "Collection" },
+      { "type": "header", "content": "Deadly Soul" },
+      { "type": "text", "id": "ds_name", "label": "Name", "default": "Deadly Soul" },
+      { "type": "image_picker", "id": "ds_logo", "label": "Logo", "info": "Transparent PNG or SVG." },
+      { "type": "collection", "id": "ds_collection", "label": "Collection" },
+      { "type": "image_picker", "id": "particle_image", "label": "Floating particle image", "info": "Shape used for the floating butterflies. Transparent PNG. Defaults to the butterfly skull." }
+    ]
+  },
+  {
+    "name": "Colours",
+    "settings": [
+      { "type": "color", "id": "color_bg", "label": "Background", "default": "#060608" },
+      { "type": "color", "id": "color_ap", "label": "A/P main", "default": "#E3122C" },
+      { "type": "color", "id": "color_ap_2", "label": "A/P highlight", "default": "#FF3B52" },
+      { "type": "color", "id": "color_ds", "label": "Deadly Soul main", "default": "#FF4FA0" },
+      { "type": "color", "id": "color_ds_2", "label": "Deadly Soul highlight", "default": "#FFC2DD" }
+    ]
+  },
+  {
+    "name": "Experience",
+    "settings": [
+      { "type": "checkbox", "id": "sound_default", "label": "Menu sounds on by default", "default": false, "info": "Visitors can toggle sound in the header." },
+      { "type": "checkbox", "id": "custom_cursor", "label": "Custom crosshair cursor", "default": true },
+      { "type": "checkbox", "id": "fx_grain", "label": "Film grain overlay", "default": true },
+      { "type": "checkbox", "id": "fx_scanlines", "label": "CRT scanlines overlay", "default": true }
+    ]
+  },
+  {
+    "name": "Social and SEO",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "image_picker", "id": "share_image", "label": "Social share image" }
+    ]
+  }
+]

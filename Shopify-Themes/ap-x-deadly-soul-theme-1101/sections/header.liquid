@@ -1,0 +1,63 @@
+{%- liquid
+  assign ap_url = '/collections/ap'
+  if settings.ap_collection != blank
+    assign ap_url = settings.ap_collection.url
+  endif
+  assign ds_url = '/collections/deadly-soul'
+  if settings.ds_collection != blank
+    assign ds_url = settings.ds_collection.url
+  endif
+  assign gallery_url = section.settings.gallery_url | default: '/pages/gallery'
+  assign about_url = section.settings.about_url | default: '/pages/about'
+  assign fit_url = section.settings.fit_url | default: '/pages/fit-lab'
+  assign here = request.path
+-%}
+<header class="hud" data-hud>
+  <div class="hud__brand">
+    <a href="{{ routes.root_url }}" class="hud__marks" aria-label="{{ shop.name }} home" data-cursor="Home">
+      <span class="hud__mark hud__mark--ap{% if here == ap_url %} is-active{% endif %}">{% render 'brand-logo', brand: 'ap', width: 120 %}</span>
+      <span class="hud__x">x</span>
+      <span class="hud__mark hud__mark--ds{% if here == ds_url %} is-active{% endif %}">{% render 'brand-logo', brand: 'ds', width: 120 %}</span>
+    </a>
+  </div>
+  <nav class="hud__nav" aria-label="Main">
+    <a class="hud__link" href="{{ routes.root_url }}"{% if template.name == 'index' %} aria-current="page"{% endif %}>Select</a>
+    <a class="hud__link hud__link--ap" href="{{ ap_url }}"{% if here == ap_url %} aria-current="page"{% endif %}>{{ settings.ap_name | default: 'A/P' }}</a>
+    <a class="hud__link hud__link--ds" href="{{ ds_url }}"{% if here == ds_url %} aria-current="page"{% endif %}>{{ settings.ds_name | default: 'Deadly Soul' }}</a>
+    <a class="hud__link hud__link--fit" href="{{ fit_url }}"{% if here == fit_url %} aria-current="page"{% endif %}>Fit lab</a>
+    <a class="hud__link" href="{{ gallery_url }}"{% if here == gallery_url %} aria-current="page"{% endif %}>Gallery</a>
+    <a class="hud__link" href="{{ about_url }}"{% if here == about_url %} aria-current="page"{% endif %}>About</a>
+  </nav>
+  <div class="hud__right">
+    <button type="button" class="hud__btn hud__sound" data-sound-toggle aria-pressed="false" aria-label="Toggle sound">
+      <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="label">Sound</span>
+    </button>
+    <a href="{{ routes.cart_url }}" class="hud__btn" data-open-cart data-cursor="Bag">
+      <span>Bag</span><span class="hud__count" data-cart-count-badge>{{ cart.item_count }}</span>
+    </a>
+    <button type="button" class="hud__btn hud__menu-btn" data-mnav-open aria-expanded="false" aria-controls="mnav">Menu</button>
+  </div>
+</header>
+
+<nav class="mnav" id="mnav" data-mnav aria-label="Mobile">
+  <button type="button" class="hud__btn mnav__close" data-mnav-close>Close &times;</button>
+  <a href="{{ routes.root_url }}"><small>00</small>Select</a>
+  <a class="ap" href="{{ ap_url }}"><small>01</small>{{ settings.ap_name | default: 'A/P' }}</a>
+  <a class="ds" href="{{ ds_url }}"><small>02</small>{{ settings.ds_name | default: 'Deadly Soul' }}</a>
+  <a href="{{ fit_url }}"><small>03</small>Fit lab</a>
+  <a href="{{ gallery_url }}"><small>04</small>Gallery</a>
+  <a href="{{ about_url }}"><small>05</small>About</a>
+</nav>
+
+{% schema %}
+{
+  "name": "HUD header",
+  "class": "section-hud",
+  "settings": [
+    { "type": "paragraph", "content": "Brand links come from Theme settings > Brands." },
+    { "type": "text", "id": "fit_url", "label": "Fit lab page path", "default": "/pages/fit-lab" },
+    { "type": "text", "id": "gallery_url", "label": "Gallery page path", "default": "/pages/gallery" },
+    { "type": "text", "id": "about_url", "label": "About page path", "default": "/pages/about" }
+  ]
+}
+{% endschema %}

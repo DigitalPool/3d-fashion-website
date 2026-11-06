@@ -1,0 +1,10 @@
+{
+  "name": "apmaac-shopify-themes",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Two Shopify themes for A/P x Deadly Soul, with a preview that runs them on a fake store.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node Shopify-Themes/local-preview/server.js" },
+  "dependencies": { "liquidjs": "^10.30.1" }
+}

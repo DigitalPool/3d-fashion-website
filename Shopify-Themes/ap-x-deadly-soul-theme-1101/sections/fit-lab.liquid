@@ -1,0 +1,118 @@
+{%- liquid
+  assign src = section.settings.collection
+  if src == blank
+    assign src = collections.all
+  endif
+-%}
+<section class="fitlab" data-fitlab aria-label="Fit lab">
+  {{ 'fit-reel.css' | asset_url | stylesheet_tag }}
+  {% render 'fit-lookbook' %}
+  <details class="fit-reel__builder" data-fit-builder>
+    <summary>Build a custom fit</summary>
+    <div class="world">
+      <canvas class="world__gl" aria-hidden="true"></canvas>
+
+      <div class="world__frame">
+        <div class="menu panel panel--cut corners fitlab__panel">
+          <div class="menu__head">
+            <div>
+              <p class="h-sub">{{ section.settings.kicker }}</p>
+              <h1 class="menu__title">{{ section.settings.title }}</h1>
+              <div class="menu__crumb"><span>{{ settings.ap_name | default: 'A/P' }}</span><span class="is-on">x</span><span>{{ settings.ds_name | default: 'Deadly Soul' }}</span></div>
+            </div>
+          </div>
+          <div class="fl-slots" data-fl-slots></div>
+          <div class="menu__foot">
+            <div><span class="kbd">&uarr;</span><span class="kbd">&darr;</span> slot <span class="kbd">&larr;</span><span class="kbd">&rarr;</span> item</div>
+            <div><span class="kbd">R</span> shuffle</div>
+          </div>
+        </div>
+
+        <div class="stage-hud world__stage-hit" data-stage>
+          <div class="stage-hud__top">
+            <span class="stage-hud__rec"><i></i>FIT LAB // TRY THE LOOK</span>
+            <span data-fl-perms>&nbsp;</span>
+          </div>
+          {% render 'photo-stage', empty: 'Select a piece to see its photography.' %}
+          <div class="stage-hud__name">
+            <h2 data-fl-name>&nbsp;</h2>
+            <p data-fl-code></p>
+            <div class="fl-actions">
+              <button type="button" class="btn btn--ghost" data-fl-featured hidden>Featured fit</button>
+              <button type="button" class="btn" data-fl-shuffle data-cursor="Shuffle">&#9861; Shuffle</button>
+              <button type="button" class="btn btn--ghost" data-fl-auto aria-pressed="false">Auto</button>
+              <button type="button" class="btn btn--ghost" data-fl-snap>Snapshot</button>
+              <button type="button" class="btn btn--ghost" data-fl-share>Share fit</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="equip panel panel--cut" aria-label="Your fit">
+          <div class="equip__head"><h3>Your fit</h3><span class="tag" data-fl-count>0 pieces</span></div>
+          <div class="equip__items" data-fl-items aria-live="polite"></div>
+          <div class="equip__foot">
+            <div class="equip__total"><span>Full fit</span><b data-fl-total>&nbsp;</b></div>
+            <button type="button" class="btn btn--block" data-fl-equip data-cursor="Equip">{{ section.settings.equip_label }}</button>
+          </div>
+        </aside>
+      </div>
+
+    </div>
+  </details>
+  <script type="application/json" data-fitlab-json>
+    {
+      "reelAssets": {
+        "pink-hour": {{ 'cutout-pink-hour.png' | asset_url | json }},
+        "mugshot-incognito": {{ 'cutout-mugshot-incognito.png' | asset_url | json }},
+        "midnight-run": {{ 'cutout-midnight-run.png' | asset_url | json }}
+      },
+      "looks": [
+        {%- for block in section.blocks -%}
+          {%- assign pictured_colours = block.settings.colours | split: ',' -%}
+          {
+            "name": {{ block.settings.title | json }},
+            "image": {% if block.settings.image %}{{ block.settings.image | image_url: width: 1400 | json }}{% else %}""{% endif %},
+            "pieces": [
+              {%- for product in block.settings.products -%}
+                { "handle": {{ product.handle | json }}, "color": {{ pictured_colours[forloop.index0] | default: '' | strip | downcase | json }} }{% unless forloop.last %},{% endunless %}
+              {%- endfor -%}
+            ],
+            "generated": {{ block.settings.generated | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ],
+      "products": [
+        {%- for p in src.products limit: 60 -%}
+          {% render 'look-json', p: p %}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Fit lab",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Create a fit" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Fit lab" },
+    { "type": "collection", "id": "collection", "label": "Products to use", "info": "Leave empty to use all products. Products are matched to garments by tag (fit-tee, fit-belt ...) or by title." },
+    { "type": "text", "id": "equip_label", "label": "Equip button", "default": "Equip full fit" }
+  ],
+  "max_blocks": 20,
+  "blocks": [
+    {
+      "type": "look",
+      "name": "Editorial look",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Look name", "default": "New look" },
+        { "type": "image_picker", "id": "image", "label": "Full-body image" },
+        { "type": "product_list", "id": "products", "label": "Pieces shown", "limit": 8, "info": "Include the pieces visible in the image. Add them to the Fit Lab collection if one is selected." },
+        { "type": "text", "id": "colours", "label": "Pictured colours", "info": "Comma-separated, in product order. Leave an empty position for a product without a colour option." },
+        { "type": "checkbox", "id": "generated", "label": "Generated image", "info": "Tick so the image is not captioned as on-model photography.", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Fit lab" }]
+}
+{% endschema %}

@@ -1,0 +1,222 @@
+{%- liquid
+  assign src_collection = collection
+  if section.settings.collection != blank
+    assign src_collection = section.settings.collection
+  endif
+  if src_collection == blank
+    assign src_collection = collections.all
+  endif
+  assign reel_stage = false
+  assign model_stage = false
+  if section.settings.stage == 'reel'
+    assign reel_stage = true
+  elsif section.settings.stage == 'model'
+    assign model_stage = true
+  endif
+
+  assign brand = section.settings.brand
+  if brand == 'auto'
+    assign brand = 'ap'
+    if settings.ds_collection != blank and src_collection.handle == settings.ds_collection.handle
+      assign brand = 'ds'
+    elsif src_collection.handle contains 'deadly' or src_collection.handle contains 'soul'
+      assign brand = 'ds'
+    endif
+  endif
+
+  if brand == 'ds'
+    assign brand_name = settings.ds_name | default: 'Deadly Soul'
+  else
+    assign brand_name = settings.ap_name | default: 'A/P'
+  endif
+  if section.settings.label != blank
+    assign brand_name = section.settings.label
+  endif
+  assign look_blocks = section.blocks | where: 'type', 'look'
+-%}
+
+{%- if reel_stage -%}{{ 'fit-reel.css' | asset_url | stylesheet_tag }}{%- endif -%}
+<section class="world world--{{ brand }}" data-world aria-label="{{ brand_name }} outfit select">
+  <canvas class="world__gl" aria-hidden="true"></canvas>
+
+  <div class="world__frame">
+    {%- comment -%} LEFT: game menu {%- endcomment -%}
+    <nav class="menu panel panel--cut corners" aria-label="Looks">
+      <div class="menu__head">
+        {%- if section.settings.label == blank -%}<div class="menu__brand">{% render 'brand-logo', brand: brand, width: 300 %}</div>{%- endif -%}
+        <div>
+          <h1 class="menu__title">{{ section.settings.title | default: 'Select outfit' }}</h1>
+          <div class="menu__crumb"><span>{{ brand_name }}</span><span class="is-on">{{ section.settings.crumb }}</span></div>
+        </div>
+      </div>
+      <ul class="menu__list" data-menu-list role="list"></ul>
+      <div class="menu__foot">
+        <div><span class="kbd">&uarr;</span><span class="kbd">&darr;</span> browse</div>
+        <div>Lookbook</div>
+      </div>
+    </nav>
+
+    {%- comment -%} CENTER: stage HUD (WebGL renders behind) {%- endcomment -%}
+    <div class="stage-hud world__stage-hit{% if reel_stage or model_stage %} stage-hud--reel{% endif %}" data-stage>
+      <div class="stage-hud__top">
+        <span class="stage-hud__rec"><i></i>Lookbook · {{ brand_name }}</span>
+        <span>LOOK <span data-look-idx>01 / 01</span></span>
+      </div>
+      {%- if reel_stage -%}
+        <div class="world__reel">
+          {% render 'fit-lookbook', compact: true %}
+          <p class="photo-stage__caption" data-reel-caption aria-live="polite"></p>
+        </div>
+      {%- elsif model_stage -%}
+        <div class="world__reel">
+          <div class="world__model" data-world-model role="img" tabindex="0" aria-label="3D view of the selected product. Drag, or use the arrow keys, to rotate it.">
+            <canvas aria-hidden="true"></canvas>
+            <img data-world-model-fallback alt="" hidden>
+            <div class="model-tools">
+              <span data-model-hint>Drag to rotate</span>
+              <button type="button" data-model-zoom="out" aria-label="Zoom out">&minus;</button>
+              <button type="button" data-model-zoom="in" aria-label="Zoom in">+</button>
+              <button type="button" data-model-zoom="reset" aria-label="Reset view">&#8634;</button>
+            </div>
+          </div>
+        </div>
+      {%- else -%}
+        {% render 'photo-stage' %}
+      {%- endif -%}
+      <div class="stage-hud__arrows">
+        <button type="button" data-prev aria-label="Previous look">&lt;</button>
+        <button type="button" data-next aria-label="Next look">&gt;</button>
+      </div>
+      <div class="stage-hud__name">
+        <h2 data-look-name>&nbsp;</h2>
+        <p data-look-sub></p>
+      </div>
+    </div>
+
+    {%- comment -%} RIGHT: equip panel {%- endcomment -%}
+    <aside class="equip panel panel--cut" aria-label="Items in this look">
+      <div class="equip__head"><h3>In this look</h3><span class="tag">{{ brand_name }}</span></div>
+      <div class="equip__stats" data-stats></div>
+      <div class="equip__items" data-items aria-live="polite"></div>
+      <div class="equip__foot">
+        <div class="equip__total"><span>Full look</span><b data-total>&nbsp;</b></div>
+        <button type="button" class="btn btn--block" data-equip-all data-cursor="Add">{{ section.settings.equip_label }}</button>
+      </div>
+    </aside>
+  </div>
+
+  <script type="application/json" data-world-json>
+    {
+      "brand": {{ brand | json }},
+      {%- if reel_stage %}
+      "reelAssets": {
+        "pink-hour": {{ 'cutout-pink-hour.png' | asset_url | json }},
+        "mugshot-incognito": {{ 'cutout-mugshot-incognito.png' | asset_url | json }},
+        "midnight-run": {{ 'cutout-midnight-run.png' | asset_url | json }}
+      },
+      {%- endif %}
+      "stats": {{ section.settings.stats | split: ',' | json }},
+      "looks": [
+        {%- if look_blocks.size > 0 -%}
+          {%- for block in look_blocks -%}
+            {%- liquid
+              assign vid = ''
+              if block.settings.video != blank
+                for s in block.settings.video.sources
+                  if s.format == 'mp4'
+                    assign vid = s.url
+                    if s.height <= 1080
+                      break
+                    endif
+                  endif
+                endfor
+              elsif block.settings.video_file_url != blank
+                assign vid = block.settings.video_file_url
+              endif
+            -%}
+            {
+              "name": {{ block.settings.name | json }},
+              "blurb": {{ block.settings.blurb | json }},
+              "image": {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1600 | json }}{% else %}""{% endif %},
+              "video": {{ vid | json }},
+              "products": [
+                {%- for p in block.settings.products -%}
+                  {% render 'look-json', p: p %}{% unless forloop.last %},{% endunless %}
+                {%- endfor -%}
+              ]
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for p in src_collection.products limit: 24 -%}
+            {
+              "name": {{ p.title | json }},
+              "blurb": {{ p.type | default: '' | json }},
+              "image": "",
+              "video": "",
+              "products": [{% render 'look-json', p: p %}]
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        {%- endif -%}
+      ]
+    }
+  </script>
+</section>
+
+{%- if section.settings.show_inventory and src_collection.products_count > 0 -%}
+  <section class="inventory{% if reel_stage %} inventory--row{% endif %}" aria-label="Full inventory">
+    <div class="inventory__head">
+      <div>
+        <p class="h-sub">{{ brand_name }} · {{ src_collection.products_count }} items</p>
+        <h2 class="h-display reveal">{{ section.settings.inventory_heading }}</h2>
+      </div>
+      <a class="btn btn--ghost" href="{{ routes.root_url }}">&larr; Back to studio</a>
+    </div>
+    <div class="grid">
+      {%- for product in src_collection.products limit: 48 -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Outfit select world",
+  "settings": [
+    { "type": "select", "id": "brand", "label": "Brand", "default": "auto", "options": [
+      { "value": "auto", "label": "Detect from collection" },
+      { "value": "ap", "label": "A/P" },
+      { "value": "ds", "label": "Deadly Soul" }
+    ]},
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty on collection pages to use the current collection. On other pages, empty lists all products." },
+    { "type": "select", "id": "stage", "label": "Centre stage", "default": "photos", "options": [
+      { "value": "model", "label": "3D product model" },
+      { "value": "photos", "label": "Product photos" },
+      { "value": "reel", "label": "Drop reel" }
+    ]},
+    { "type": "text", "id": "label", "label": "Name instead of brand", "info": "For pages that mix both brands. Also hides the logo." },
+    { "type": "text", "id": "title", "label": "Menu title", "default": "Pick a piece" },
+    { "type": "text", "id": "crumb", "label": "Menu tab", "default": "Collection" },
+    { "type": "text", "id": "stats", "label": "Stat names (comma separated)", "default": "Drip,Heat,Rarity,Menace" },
+    { "type": "text", "id": "equip_label", "label": "Add button", "default": "Add to bag" },
+    { "type": "checkbox", "id": "show_inventory", "label": "Show full inventory grid below", "default": true },
+    { "type": "text", "id": "inventory_heading", "label": "Grid heading", "default": "All pieces" },
+    { "type": "paragraph", "content": "No Look blocks? Every product in the collection becomes its own look automatically." }
+  ],
+  "blocks": [
+    {
+      "type": "look",
+      "name": "Look",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Look name", "default": "Knight" },
+        { "type": "text", "id": "blurb", "label": "Short line", "default": "Full fit, ready to equip" },
+        { "type": "image_picker", "id": "image", "label": "Look image", "info": "Model photo of the full outfit. Portrait works best." },
+        { "type": "video", "id": "video", "label": "Look video (optional)", "info": "Upload an MP4 of the model. Plays on the stage instead of the image." },
+        { "type": "text", "id": "video_file_url", "label": "Or video file URL (.mp4)" },
+        { "type": "product_list", "id": "products", "label": "Products in this look", "limit": 6 }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Outfit select world" }]
+}
+{% endschema %}

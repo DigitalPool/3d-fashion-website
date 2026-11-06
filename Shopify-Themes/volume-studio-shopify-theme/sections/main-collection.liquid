@@ -1,0 +1,20 @@
+<div class="page-head">
+  <p class="h-sub">{{ collection.products_count }} items</p>
+  <h1 class="h-display">{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+</div>
+<div class="page-body">
+  {%- paginate collection.products by 24 -%}
+    <div class="grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="rte">No products here yet.</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}<nav class="pagination">{{ paginate | default_pagination }}</nav>{%- endif -%}
+  {%- endpaginate -%}
+</div>
+{% schema %}
+{ "name": "Collection grid", "settings": [] }
+{% endschema %}

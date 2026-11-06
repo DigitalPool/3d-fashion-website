@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "hero": {
+      "type": "volume-hero",
+      "settings": {},
+      "blocks": {
+        "hoodie": {
+          "type": "item",
+          "settings": {
+            "product": "apsht-cropped-set",
+            "word": "HOODIES",
+            "kicker": "Next generation",
+            "heading": "STREET\nHOODIE",
+            "colour_name": "Black",
+            "colour_hex": "#111111",
+            "model": "black-cropped-hoodie.glb",
+            "thumb": "hoodie-view-front.webp",
+            "scale": 100
+          }
+        },
+        "balaclava": {
+          "type": "item",
+          "settings": {
+            "product": "ap-knit-balaclava",
+            "word": "BALACLAVAS",
+            "kicker": "A/P headwear",
+            "heading": "KNIT\nBALACLAVA",
+            "colour_name": "Cream",
+            "colour_hex": "#e6dac2",
+            "model": "model-ap-knit-balaclava-cream.glb",
+            "thumb": "hero-thumb-balaclava-cream.webp",
+            "scale": 75
+          }
+        },
+        "bag": {
+          "type": "item",
+          "settings": {
+            "product": "butterfly-bowling-bag",
+            "word": "BAGS",
+            "kicker": "Deadly Soul",
+            "heading": "BOWLING\nBAG",
+            "colour_name": "Pink",
+            "colour_hex": "#ee85ab",
+            "model": "model-butterfly-bowling-bag.glb",
+            "thumb": "hero-thumb-bag.webp",
+            "scale": 90
+          }
+        }
+      },
+      "block_order": ["hoodie", "balaclava", "bag"]
+    },
+    "index": { "type": "object-index", "settings": {} },
+    "campaign": { "type": "campaign-feature", "settings": {} },
+    "hoodie": { "type": "floating-hoodie", "settings": {} }
+  },
+  "order": ["hero", "index", "campaign", "hoodie"]
+}

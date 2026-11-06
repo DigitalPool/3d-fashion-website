@@ -1,0 +1,57 @@
+<footer class="footer">
+  <div class="footer__credits">
+    <div>
+      <h3>{{ section.settings.news_heading }}</h3>
+      {%- form 'customer', class: 'newsletter' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="pdp__msg">YOU'RE ON THE LIST. [OK]</p>
+        {%- else -%}
+          <div class="field">
+            <label class="visually-hidden" for="ft-email">Email</label>
+            <input id="ft-email" type="email" name="contact[email]" placeholder="ENTER EMAIL" autocomplete="email" required>
+            <button type="submit">Join</button>
+          </div>
+          {%- if form.errors -%}<p class="pdp__msg">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul>
+        {%- if section.settings.menu != blank -%}
+          {%- for link in section.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+        {%- else -%}
+          <li><a href="{{ routes.all_products_collection_url }}">All products</a></li>
+          <li><a href="{{ routes.search_url }}">Search</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+    <div>
+      <h3>Info</h3>
+      <ul>
+        {%- for policy in shop.policies -%}<li><a href="{{ policy.url }}">{{ policy.title }}</a></li>{%- endfor -%}
+        {%- if section.settings.instagram != blank -%}<li><a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a></li>{%- endif -%}
+        {%- if section.settings.tiktok != blank -%}<li><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a></li>{%- endif -%}
+      </ul>
+    </div>
+  </div>
+  <div class="footer__big" aria-hidden="true"><span>{{ settings.ap_name | default: 'A/P' }}</span><span class="ds">{{ settings.ds_name | default: 'Deadly Soul' }}</span></div>
+  <div class="footer__bar">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+    <span class="footer__press">PRESS START TO CONTINUE</span>
+    <span>{{ powered_by_link }}</span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "news_heading", "label": "Newsletter heading", "default": "Join the crew. Drops first." },
+    { "type": "link_list", "id": "menu", "label": "Shop menu" },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" }
+  ]
+}
+{% endschema %}

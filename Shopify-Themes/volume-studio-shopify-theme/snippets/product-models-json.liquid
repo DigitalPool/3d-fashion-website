@@ -1,0 +1,17 @@
+{%- comment -%} 3D model files for a product as JSON. Accepts: key. Colours without their own file use the default. {%- endcomment -%}
+{%- liquid
+  assign colours = ''
+  case key
+    when 'ap-belt'
+      assign colours = 'white,red,blue,brown,gray,green,pink' | split: ','
+    when 'ap-knit-balaclava'
+      assign colours = 'cream' | split: ','
+  endcase
+  assign default_model = 'model-' | append: key | append: '.glb' | asset_url
+-%}
+{ "default": {{ default_model | json }}, "colours": {
+  {%- for colour in colours -%}
+    {%- assign colour_model = 'model-' | append: key | append: '-' | append: colour | append: '.glb' | asset_url -%}
+    {{ colour | json }}: {{ colour_model | json }}{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+} }

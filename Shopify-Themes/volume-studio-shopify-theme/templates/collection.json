@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "world": { "type": "world", "settings": { "brand": "auto", "stage": "photos" } }
+  },
+  "order": ["world"]
+}

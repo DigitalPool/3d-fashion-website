@@ -1,0 +1,29 @@
+{%- comment -%} renders: product {%- endcomment -%}
+{%- capture mockup -%}{% render 'product-mockup', product: product %}{%- endcapture -%}
+{%- assign model = '' -%}
+{%- if mockup != blank -%}
+  {%- assign model_key = mockup | strip | split: 'mockup-' | last | split: '.jpg' | first -%}
+  {%- assign model = 'model-' | append: model_key | append: '.glb' | asset_url -%}
+{%- endif -%}
+<a class="card" href="{{ product.url }}" data-cursor="Inspect"{% if model != '' %} data-card-model="{{ model | escape }}"{% endif %}>
+  <div class="card__media">
+    {%- if mockup != blank -%}
+      <img src="{{ mockup | escape }}" alt="{{ product.title | escape }} studio mockup" loading="lazy" width="600" height="800">
+    {%- elsif product.featured_media -%}
+      {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900', sizes: '(min-width: 1000px) 25vw, 50vw', alt: product.title }}
+      {%- if product.media[1] -%}
+        {{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360,540,720,900', sizes: '(min-width: 1000px) 25vw, 50vw', alt: '' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-apparel-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    <span class="card__shine"></span>
+    {%- unless product.available -%}<span class="card__badge">Sold out</span>
+    {%- else -%}{%- if product.compare_at_price > product.price -%}<span class="card__badge">Sale</span>{%- endif -%}{%- endunless -%}
+    <span class="card__inspect">Inspect &rarr;</span>
+  </div>
+  <div class="card__meta">
+    <h3 class="card__title">{{ product.title }}</h3>
+    <span class="price">{{ product.price | money }}</span>
+  </div>
+</a>

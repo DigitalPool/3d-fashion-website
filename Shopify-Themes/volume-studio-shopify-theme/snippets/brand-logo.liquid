@@ -1,0 +1,18 @@
+{%- comment -%} Accepts: brand ('ap' | 'ds'), width {%- endcomment -%}
+{%- liquid
+  if brand == 'ds'
+    assign logo = settings.ds_logo
+    assign name = settings.ds_name | default: 'Deadly Soul'
+  else
+    assign logo = settings.ap_logo
+    assign name = settings.ap_name | default: 'A/P'
+  endif
+  assign w = width | default: 400
+-%}
+{%- if logo != blank -%}
+  {{ logo | image_url: width: w | image_tag: alt: name, loading: 'eager' }}
+{%- elsif brand == 'ds' -%}
+  {% render 'logo-ds' %}<span class="visually-hidden">{{ name }}</span>
+{%- else -%}
+  {% render 'logo-ap' %}<span class="visually-hidden">{{ name }}</span>
+{%- endif -%}

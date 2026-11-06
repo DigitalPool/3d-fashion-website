@@ -1,0 +1,2 @@
+{%- comment -%} A spinning 3D model. Accepts: file (.glb in assets), label {%- endcomment -%}
+<div class="model-spot" data-model-spot="{{ file | asset_url | escape }}" role="img" aria-label="3D model of {{ label | escape }}" tabindex="0"><canvas aria-hidden="true"></canvas></div>

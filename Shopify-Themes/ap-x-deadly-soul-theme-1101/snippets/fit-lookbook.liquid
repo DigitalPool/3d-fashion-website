@@ -1,0 +1,34 @@
+<div class="fit-reel{% if compact %} fit-reel--compact{% endif %}" data-fit-reel>
+  {%- unless compact -%}
+  <header class="fit-reel__intro">
+    <p>FIT LAB / A/P × DEADLY SOUL</p>
+    <h2>THE DROP REEL</h2>
+    <span>Swipe through the looks. Shop the pieces that make each one.</span>
+  </header>
+  {%- endunless -%}
+  <div class="fit-reel__layout">
+    <div class="fit-reel__stage">
+      <div class="fit-reel__track" data-reel-track tabindex="0" role="region" aria-label="Outfit reel. Use left and right arrow keys to browse."></div>
+      <div class="fit-reel__controls" aria-label="Browse looks">
+        <button type="button" data-reel-prev aria-label="Previous look">&larr;</button>
+        <div class="fit-reel__pages" data-reel-pages></div>
+        <button type="button" data-reel-next aria-label="Next look">&rarr;</button>
+      </div>
+      <button type="button" class="fit-reel__hotspots" data-reel-inspect>Open full view</button>
+      <button type="button" class="fit-reel__hotspots" data-reel-hotspots aria-pressed="false" hidden>Show shoppable spots</button>
+    </div>
+    <aside class="fit-reel__shop" aria-label="Shop this outfit">
+      <header>
+        <p data-reel-index></p>
+        <h3 data-reel-title aria-live="polite"></h3>
+        <p data-reel-credit></p>
+      </header>
+      <div data-reel-products></div>
+      <footer>
+        <div class="fit-reel__total"><span>Look total</span><strong data-reel-total></strong></div>
+        <button class="btn btn--block" type="button" data-reel-add-look disabled>Add full look to bag</button>
+        <p class="fit-reel__status" data-reel-status role="status"></p>
+      </footer>
+    </aside>
+  </div>
+</div>

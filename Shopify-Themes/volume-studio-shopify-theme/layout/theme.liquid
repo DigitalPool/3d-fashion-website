@@ -1,0 +1,111 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#060608">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
+    <title>
+      {{- page_title -}}
+      {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {% render 'meta-tags' %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@400;500;600;700&family=Pirata+One&family=VT323&display=swap">
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'volume.css' | asset_url | stylesheet_tag }}
+    {{ 'volume-pages.css' | asset_url | stylesheet_tag }}
+    {%- if template.name == 'index' -%}{{ 'home.css' | asset_url | stylesheet_tag }}{%- endif -%}
+    <style>
+      :root {
+        --ap: {{ settings.color_ap }};
+        --ap-2: {{ settings.color_ap_2 }};
+        --ds: {{ settings.color_ds }};
+        --ds-2: {{ settings.color_ds_2 }};
+        --bg: {{ settings.color_bg }};
+      }
+    </style>
+
+    <script type="importmap">
+      { "imports": { "three": {{ 'three.module.min.js' | asset_url | json }} } }
+    </script>
+    <script>
+      window.SHOP = {
+        moneyFormat: {{ shop.money_format | json }},
+        sound: {{ settings.sound_default | json }},
+        routes: {
+          root: {{ routes.root_url | json }},
+          all: {{ routes.all_products_collection_url | json }},
+          cart: {{ routes.cart_url | append: '.js' | json }},
+          cart_add: {{ routes.cart_add_url | append: '.js' | json }},
+          cart_change: {{ routes.cart_change_url | append: '.js' | json }},
+          cart_url: {{ routes.cart_url | json }}
+        },
+        assetBase: {{ 'logo-ap.svg' | asset_url | split: 'logo-ap.svg' | first | json }},
+        assets: {
+          butterfly: {% if settings.particle_image != blank %}{{ settings.particle_image | image_url: width: 256 | json }}{% else %}{{ 'logo-ds.svg' | asset_url | json }}{% endif %}
+        },
+        productPhotos: {
+          "where-is-my-money-tee": {{ 'mockup-where-is-my-money-tee.jpg' | asset_url | json }},
+          "mugshot-tee": {{ 'mockup-mugshot-tee.jpg' | asset_url | json }},
+          "butterfly-bowling-bag": {{ 'mockup-butterfly-bowling-bag.jpg' | asset_url | json }},
+          "ap-belt": {{ 'mockup-ap-belt.jpg' | asset_url | json }},
+          "ap-knit-balaclava": {{ 'mockup-ap-knit-balaclava.jpg' | asset_url | json }},
+          "apsht-cropped-set": {{ 'mockup-apsht-cropped-set.jpg' | asset_url | json }},
+          "soul-messenger-bag": {{ 'mockup-soul-messenger-bag.jpg' | asset_url | json }}
+        },
+        modelPhotos: {
+          "where-is-my-money-tee": { "default": {{ 'cutout-where-is-my-money-tee.png' | asset_url | json }}, "black": {{ 'cutout-where-is-my-money-tee.png' | asset_url | json }} },
+          "mugshot-tee": { "default": {{ 'cutout-mugshot-tee.png' | asset_url | json }}, "white": {{ 'cutout-mugshot-tee.png' | asset_url | json }} },
+          "butterfly-bowling-bag": { "default": {{ 'cutout-butterfly-bowling-bag.png' | asset_url | json }}, "pink": {{ 'cutout-butterfly-bowling-bag.png' | asset_url | json }} },
+          "ap-belt": { "default": {{ 'cutout-ap-belt.png' | asset_url | json }}, "black": {{ 'cutout-ap-belt.png' | asset_url | json }} },
+          "ap-knit-balaclava": { "default": {{ 'cutout-ap-knit-balaclava.png' | asset_url | json }}, "black": {{ 'cutout-ap-knit-balaclava.png' | asset_url | json }} },
+          "soul-messenger-bag": { "default": {{ 'cutout-soul-messenger-bag.png' | asset_url | json }}, "black": {{ 'cutout-soul-messenger-bag.png' | asset_url | json }} }
+        },
+        setCutout: {{ 'cutout-apsht-cropped-set.png' | asset_url | json }},
+        featuredFitPhoto: {{ 'cutout-featured-fit.png' | asset_url | json }},
+        modules: {
+          vs: {{ 'side-select.js' | asset_url | json }},
+          world: {{ 'world.js' | asset_url | json }},
+          gallery: {{ 'gallery.js' | asset_url | json }},
+          fitlab: {{ 'fitlab.js' | asset_url | json }}
+        }
+      };
+    </script>
+    <script src="{{ 'app.js' | asset_url }}" type="module" defer></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}--{{ template.suffix }}{% endif %}" data-side="neutral" data-volume-theme>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    {% sections 'header-group' %}
+
+    <main id="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% render 'cart-drawer' %}
+
+    <div class="toast" data-toast role="status" aria-live="polite"><i></i><span></span></div>
+    {%- if settings.fx_grain -%}<div class="fx-grain" aria-hidden="true"></div>{%- endif -%}
+    {%- if settings.fx_scanlines -%}<div class="fx-scan" aria-hidden="true"></div>{%- endif -%}
+
+    {%- if settings.custom_cursor -%}<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>{%- endif -%}
+    <div class="wipe" aria-hidden="true"></div>
+  </body>
+</html>

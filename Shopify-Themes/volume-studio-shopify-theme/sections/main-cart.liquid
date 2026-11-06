@@ -1,0 +1,40 @@
+<div class="page-head">
+  <div class="page-head__model">{% render 'model-spot', file: 'model-butterfly-bowling-bag.glb', label: 'the butterfly bowling bag' %}</div>
+  <p class="h-sub">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</p>
+  <h1 class="h-display">Your bag</h1>
+</div>
+<div class="page-body">
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" class="cart-page">
+      <table>
+        <thead><tr><th>Item</th><th>Qty</th><th style="text-align:right">Total</th></tr></thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td>
+                <div style="display:flex;gap:14px;align-items:center">
+                  {%- if item.image -%}{{ item.image | image_url: width: 160 | image_tag: width: 80, height: 80, style: 'object-fit:cover;width:80px;height:80px' }}{%- endif -%}
+                  <div><a href="{{ item.url }}"><b>{{ item.product.title }}</b></a>{% unless item.product.has_only_default_variant %}<div class="line__v">{{ item.variant.title }}</div>{% endunless %}
+                  <a class="line__rm" href="{{ item.url_to_remove }}">Remove</a></div>
+                </div>
+              </td>
+              <td><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity for {{ item.product.title | escape }}"></td>
+              <td style="text-align:right">{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+      <div class="panel panel--cut" style="padding:22px;display:grid;gap:14px">
+        <div class="drawer__sub"><span>Subtotal</span><b>{{ cart.total_price | money }}</b></div>
+        <p class="drawer__note">Taxes and shipping calculated at checkout.</p>
+        <button type="submit" name="update" class="btn btn--ghost btn--block">Update</button>
+        <button type="submit" name="checkout" class="btn btn--block">Checkout &rarr;</button>
+      </div>
+    </form>
+  {%- else -%}
+    <div class="drawer__empty"><span>Your bag is empty</span><a class="btn" href="{{ routes.root_url }}">Back to the studio</a></div>
+  {%- endif -%}
+</div>
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

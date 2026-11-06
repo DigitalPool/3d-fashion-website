@@ -1,0 +1,18 @@
+<div class="drawer" data-drawer aria-hidden="true">
+  <div class="drawer__scrim" data-close-drawer></div>
+  <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label="Cart">
+    <div class="drawer__head">
+      <h2>Your bag <small data-cart-count>[{{ cart.item_count | prepend: '0' | slice: -2, 2 }}]</small></h2>
+      <button type="button" class="hud__btn drawer__close" data-close-drawer aria-label="Close cart">Close &times;</button>
+    </div>
+    <div class="drawer__body" data-drawer-body></div>
+    <div class="drawer__foot">
+      <div class="drawer__sub"><span>Subtotal</span><b data-subtotal>{{ cart.total_price | money }}</b></div>
+      <p class="drawer__note">Taxes and shipping calculated at checkout.</p>
+      <form action="{{ routes.cart_url }}" method="post">
+        <button type="submit" name="checkout" class="btn btn--block" data-cursor="Checkout">Checkout &rarr;</button>
+      </form>
+      <a class="btn btn--ghost btn--block" href="{{ routes.cart_url }}">View cart</a>
+    </div>
+  </aside>
+</div>
