@@ -1,5 +1,5 @@
 {
-  "buildCommand": "mkdir -p public",
+  "buildCommand": "mkdir -p public && printf 'User-agent: *\\nDisallow: /\\n' > public/robots.txt",
   "outputDirectory": "public",
   "functions": {
     "api/index.js": {

@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Vercel
+.vercel/
+public/
+
+# Environment and secrets
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Built theme zips (rebuild with the commands in README.md)
+Shopify-Themes/exports/
+*.zip
+
+# Large original models (60 MB each). The themes contain compressed copies.
+glb-files/
+
+# Working material the site doesn't use
+Source/
+fit-lab-models/
+3d-cloth-website-2/
+Indigo stairwell streetwear campaign.png
+
+# Product mockups: only product-mockups/png is used by the preview
+product-mockups/*
+!product-mockups/png/
