@@ -7,14 +7,13 @@ const grid = $('[data-gallery-grid]', root);
 const dialog = $('[data-lightbox]');
 const fullImage = $('img', dialog);
 const shop = $('[data-lb-link]', dialog);
+// One card per product: its first model shot, or its first photo when nobody wears it yet.
 const products = data.products.flatMap((product) => {
   const entries = productViews(product);
-  const primary = entries[0];
-  if (!primary) return [];
-  const photos = [primary, ...entries.slice(1).filter((photo) => photo.model || photo.gallery)];
-  return photos.map((photo) => ({ ...photo, title: product.title, url: product.url }));
+  const pick = entries.find((photo) => photo.model) || entries[0];
+  return pick ? [{ ...pick, title: product.title, url: product.url }] : [];
 });
-const items = data.looks.length ? [...data.looks, ...products.filter((photo) => photo.model || photo.gallery)] :
+const items = data.looks.length ? [...data.looks, ...products.filter((photo) => photo.model)] :
   products.length ? products : suppliedGallery();
 const seen = new Set();
 const reveal = window.APDS.reduce ? null : new IntersectionObserver((entries) => {

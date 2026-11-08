@@ -57,7 +57,7 @@ function everyPhoto(product, variant, colorIndex) {
   const ordered = [...looks].sort((a, b) => Number(b.color === chosen) - Number(a.color === chosen));
   return [
     ...ordered.map((look) => ({ src: look.src, label: `${product.title} · ${look.label}`, model: true, generated: true })),
-    ...(product.photos || []).filter((photo) => photo.src).map((photo) => ({ src: photo.src, label: photo.label || product.title, gallery: true })),
+    ...(product.photos || []).filter((photo) => photo.src).map((photo) => ({ src: photo.src, label: photo.label || product.title })),
   ];
 }
 
@@ -82,7 +82,7 @@ export function productViews(product, variant) {
     ...everyPhoto(product, variant, colorIndex),
   ];
   return entries.filter((entry, index) => entry?.src && entries.findIndex((other) => other?.src === entry.src) === index)
-    .map((entry) => ({ ...entry, label: entry.label || product.title, gallery: entries.some((other) => other?.src === entry.src && other.gallery) }));
+    .map((entry) => ({ ...entry, label: entry.label || product.title }));
 }
 
 export function createPhotoStage(root) {
