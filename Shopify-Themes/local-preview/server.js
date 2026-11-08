@@ -11,10 +11,13 @@ import { Liquid } from 'liquidjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const THEMES = [
-  { key: 'ap', name: 'A/P x Deadly Soul', dir: 'ap-x-deadly-soul-theme-1101', port: 4101 },
+  { key: 'ap', name: 'AlwaysPaid x Deadly Soul', dir: 'ap-x-deadly-soul-theme-1101', port: 4101 },
   { key: 'volume', name: 'Volume Studio', dir: 'volume-studio-shopify-theme', port: 4102 },
 ];
 const HOSTED = Boolean(process.env.VERCEL);
+// Each deploy serves its assets under a new folder (/assets/v-<commit>/…), so browsers never keep an old script.
+// Relative imports between the theme's scripts resolve inside the same folder, so they pick up the version too.
+const ASSET_VERSION = HOSTED ? `v-${(process.env.VERCEL_GIT_COMMIT_SHA || process.env.VERCEL_DEPLOYMENT_ID || String(Date.now())).slice(0, 12)}` : '';
 const MOCK_MEDIA = resolve(HERE, '../../product-mockups/png');
 const MOCK_STORE = join(HERE, 'mock-store.json');
 const MIME = {
@@ -149,7 +152,7 @@ export function createTheme(theme) {
   };
   const attrs = (pairs) => pairs.map(([k, v]) => ` ${k}="${esc(v)}"`).join('');
   engine.registerFilter('json', (v) => (v === undefined ? 'null' : JSON.stringify(v)));
-  engine.registerFilter('asset_url', (name) => `/assets/${name}`);
+  engine.registerFilter('asset_url', (name) => (ASSET_VERSION ? `/assets/${ASSET_VERSION}/${name}` : `/assets/${name}`));
   engine.registerFilter('image_url', (img) => (typeof img === 'string' ? img : img?.src || '')); // local files are not resized
   engine.registerFilter('image_tag', (url, ...args) => {
     const pairs = args.filter(Array.isArray).filter(([k]) => k !== 'widths');
@@ -347,9 +350,13 @@ export function createTheme(theme) {
   const redirect = (res, to) => { res.writeHead(303, { Location: to }); res.end(); };
 
   function serveFile(res, base, relative) {
+    const versioned = Boolean(ASSET_VERSION) && relative.startsWith(`/${ASSET_VERSION}/`);
+    if (versioned) relative = relative.slice(ASSET_VERSION.length + 1);
     const target = resolve(base, `.${decodeURIComponent(relative)}`);
     if (!target.startsWith(base + sep) || !existsSync(target) || !statSync(target).isFile()) return send(res, 404, 'text/plain', 'Not found');
-    res.writeHead(200, { 'Content-Type': MIME[extname(target).toLowerCase()] || 'application/octet-stream', 'Cache-Control': HOSTED ? 'public, max-age=86400' : 'no-store' });
+    // Versioned files never change, so they can be kept; anything else is checked with the server on every load.
+    const cache = !HOSTED ? 'no-store' : versioned ? 'public, max-age=31536000, immutable' : 'no-cache';
+    res.writeHead(200, { 'Content-Type': MIME[extname(target).toLowerCase()] || 'application/octet-stream', 'Cache-Control': cache });
     createReadStream(target).pipe(res);
   }
 
