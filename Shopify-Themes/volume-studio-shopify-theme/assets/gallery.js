@@ -1,4 +1,4 @@
-import { productViews, suppliedGallery } from './product-media.js';
+import { productKey, productViews, suppliedGallery } from './product-media.js';
 
 const { $, Sound } = window.APDS;
 const root = $('[data-gallery]');
@@ -8,10 +8,14 @@ const dialog = $('[data-lightbox]');
 const fullImage = $('img', dialog);
 const shop = $('[data-lb-link]', dialog);
 // One card per product: its first model shot, or its first photo when nobody wears it yet.
+// SHOP.galleryExtras adds a few more model shots (another colour) right after their product's card.
+const extras = window.SHOP?.galleryExtras || [];
 const products = data.products.flatMap((product) => {
   const entries = productViews(product);
   const pick = entries.find((photo) => photo.model) || entries[0];
-  return pick ? [{ ...pick, title: product.title, url: product.url }] : [];
+  const more = extras.filter((extra) => extra.product === productKey(product))
+    .map((extra) => ({ src: extra.src, label: `${product.title} · ${extra.label}`, model: true, generated: true }));
+  return (pick ? [pick, ...more] : []).map((photo) => ({ ...photo, title: product.title, url: product.url }));
 });
 const items = data.looks.length ? [...data.looks, ...products.filter((photo) => photo.model)] :
   products.length ? products : suppliedGallery();
