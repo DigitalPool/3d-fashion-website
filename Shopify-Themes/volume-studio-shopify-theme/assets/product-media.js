@@ -4,7 +4,7 @@ const supplied = [
   ['where-is-my-money-tee', /where.*my money/, 'Where Da F**k Is My Money Tee'],
   ['mugshot-tee', /mugshot/, 'Deadly Soul Mugshot Tee'],
   ['butterfly-bowling-bag', /butterfly.*bowling/, 'Deadly Soul Butterfly Bowling Bag'],
-  ['ap-belt', /^(a\/p |apsht )?belt$/, 'A/P Belt'],
+  ['ap-belt', /^(a\/p |alwayspaid |apsht )?belt$/, 'A/P Belt'],
   ['ap-knit-balaclava', /balaclava/, 'A/P Knit Balaclava'],
   ['apsht-cropped-set', /cropped hoodie set|apsht.*cropped.*set/, 'APSHT Cropped Hoodie Set'],
   ['soul-messenger-bag', /messenger bag/, 'Deadly Soul Messenger Bag'],
@@ -49,6 +49,18 @@ export function productThumbnail(product, variant) {
 
 }
 
+/* Products with a supplied photo set show every photo: all colours, model shots and product shots. */
+function everyPhoto(product, variant, colorIndex) {
+  const looks = window.SHOP?.lookPhotos?.[productKey(product)];
+  if (!looks) return [];
+  const chosen = colorIndex < 0 || !variant ? '' : String(variant.options?.[colorIndex] || '').trim().toLowerCase();
+  const ordered = [...looks].sort((a, b) => Number(b.color === chosen) - Number(a.color === chosen));
+  return [
+    ...ordered.map((look) => ({ src: look.src, label: `${product.title} · ${look.label}`, model: true, generated: true })),
+    ...(product.photos || []).filter((photo) => photo.src).map((photo) => ({ src: photo.src, label: photo.label || product.title, gallery: true })),
+  ];
+}
+
 export function productViews(product, variant) {
   const fallback = suppliedPhoto(product);
   const image = variant?.image;
@@ -67,9 +79,10 @@ export function productViews(product, variant) {
     image ? (variantPhoto || { src: image, label: product.title }) : fallback,
     fallback && (!image || !fallback.model) ? fallback : null,
     ...eligible.filter((photo) => !photo.model),
+    ...everyPhoto(product, variant, colorIndex),
   ];
   return entries.filter((entry, index) => entry?.src && entries.findIndex((other) => other?.src === entry.src) === index)
-    .map((entry) => ({ ...entry, label: entry.label || product.title }));
+    .map((entry) => ({ ...entry, label: entry.label || product.title, gallery: entries.some((other) => other?.src === entry.src && other.gallery) }));
 }
 
 export function createPhotoStage(root) {

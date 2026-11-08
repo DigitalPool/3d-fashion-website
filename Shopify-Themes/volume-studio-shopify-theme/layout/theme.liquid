@@ -79,6 +79,23 @@
         },
         setCutout: {{ 'cutout-apsht-cropped-set.png' | asset_url | json }},
         featuredFitPhoto: {{ 'cutout-featured-fit.png' | asset_url | json }},
+        lookPhotos: {
+          "apsht-windbreaker-set": [{ "src": {{ 'look-windbreaker-front.webp' | asset_url | json }}, "label": "Black · front", "color": "black" }, { "src": {{ 'look-windbreaker-back.webp' | asset_url | json }}, "label": "Black · back", "color": "black" }, { "src": {{ 'look-windbreaker-balaclava.webp' | asset_url | json }}, "label": "Black · with balaclava", "color": "black" }, { "src": {{ 'look-windbreaker-crossbody.webp' | asset_url | json }}, "label": "Black · with crossbody", "color": "black" }, { "src": {{ 'look-windbreaker-pink-front.webp' | asset_url | json }}, "label": "Pink · front", "color": "pink" }, { "src": {{ 'look-windbreaker-pink-back.webp' | asset_url | json }}, "label": "Pink · back", "color": "pink" }, { "src": {{ 'look-windbreaker-pink-balaclava.webp' | asset_url | json }}, "label": "Pink · with balaclava", "color": "pink" }, { "src": {{ 'look-windbreaker-pink-crossbody.webp' | asset_url | json }}, "label": "Pink · with crossbody", "color": "pink" }],
+          "apsht-hoodie-tracksuit": [{ "src": {{ 'look-hoodie-tracksuit-model.webp' | asset_url | json }}, "label": "On the model", "color": "" }, { "src": {{ 'look-hoodie-tracksuit-balaclava.webp' | asset_url | json }}, "label": "With balaclava", "color": "" }, { "src": {{ 'look-hoodie-tracksuit-messenger.webp' | asset_url | json }}, "label": "With messenger bag", "color": "" }]
+        },
+        reelCutouts: {
+          "windbreaker-front": {{ 'cutout-windbreaker-front.png' | asset_url | json }},
+          "windbreaker-back": {{ 'cutout-windbreaker-back.png' | asset_url | json }},
+          "windbreaker-balaclava": {{ 'cutout-windbreaker-balaclava.png' | asset_url | json }},
+          "windbreaker-crossbody": {{ 'cutout-windbreaker-crossbody.png' | asset_url | json }},
+          "windbreaker-pink-front": {{ 'cutout-windbreaker-pink-front.png' | asset_url | json }},
+          "windbreaker-pink-back": {{ 'cutout-windbreaker-pink-back.png' | asset_url | json }},
+          "windbreaker-pink-balaclava": {{ 'cutout-windbreaker-pink-balaclava.png' | asset_url | json }},
+          "windbreaker-pink-crossbody": {{ 'cutout-windbreaker-pink-crossbody.png' | asset_url | json }},
+          "hoodie-tracksuit-model": {{ 'cutout-hoodie-tracksuit-model.png' | asset_url | json }},
+          "hoodie-tracksuit-balaclava": {{ 'cutout-hoodie-tracksuit-balaclava.png' | asset_url | json }},
+          "hoodie-tracksuit-messenger": {{ 'cutout-hoodie-tracksuit-messenger.png' | asset_url | json }}
+        },
         modules: {
           vs: {{ 'side-select.js' | asset_url | json }},
           world: {{ 'world.js' | asset_url | json }},

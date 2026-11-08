@@ -1,7 +1,7 @@
 {
   "_note": "Fake store data for the local preview only. Products come from Source/ap-deadly-soul-products.csv. Nothing here is uploaded to Shopify. Edit freely; pages reload on save. PLACEHOLDER PRICES ($0.00) on the APSHT Windbreaker Set and APSHT Hoodie Tracksuit until the client confirms them.",
   "shop": {
-    "name": "A/P x Deadly Soul",
+    "name": "AlwaysPaid x Deadly Soul",
     "description": "Two brands. One world.",
     "money_format": "${{amount}}",
     "currency": "USD",
@@ -10,7 +10,7 @@
   "collections": [
     {
       "handle": "ap",
-      "title": "A/P",
+      "title": "AlwaysPaid",
       "description": ""
     },
     {
@@ -23,8 +23,8 @@
     {
       "handle": "where-is-my-money-tee",
       "title": "Where Da F**k Is My Money Tee",
-      "description": "<p>Black A/P graphic tee with the WHERE DA F**K IS MY MONEY print.</p>",
-      "vendor": "A/P",
+      "description": "<p>Black AlwaysPaid graphic tee with the WHERE DA F**K IS MY MONEY print.</p>",
+      "vendor": "AlwaysPaid",
       "type": "T-Shirt",
       "tags": [
         "ap",
@@ -75,9 +75,9 @@
     },
     {
       "handle": "ap-knit-balaclava",
-      "title": "A/P Knit Balaclava",
-      "description": "<p>Ribbed knit balaclava with embroidered A/P patch and teeth detail.</p>",
-      "vendor": "A/P",
+      "title": "AlwaysPaid Knit Balaclava",
+      "description": "<p>Ribbed knit balaclava with embroidered AlwaysPaid patch and teeth detail.</p>",
+      "vendor": "AlwaysPaid",
       "type": "Headwear",
       "tags": [
         "ap",
@@ -113,7 +113,7 @@
       "handle": "apsht-cropped-set",
       "title": "APSHT Cropped Hoodie Set",
       "description": "<p>Cropped APSHT hoodie with matching wide-leg striped sweatpants.</p>",
-      "vendor": "A/P",
+      "vendor": "AlwaysPaid",
       "type": "Set",
       "tags": [
         "ap",
@@ -164,9 +164,9 @@
     },
     {
       "handle": "ap-belt",
-      "title": "A/P Belt",
-      "description": "<p>A/P buckle belt, 36 inches total length. Available in eight colours.</p>",
-      "vendor": "A/P",
+      "title": "AlwaysPaid Belt",
+      "description": "<p>AlwaysPaid buckle belt, 36 inches total length. Available in eight colours.</p>",
+      "vendor": "AlwaysPaid",
       "type": "Belt",
       "tags": [
         "ap",
@@ -359,7 +359,7 @@
       "handle": "apsht-windbreaker-set",
       "title": "APSHT Windbreaker Set",
       "description": "<p>APSHT windbreaker jacket with matching shorts. Available in black and white or pink and white.</p>",
-      "vendor": "A/P",
+      "vendor": "AlwaysPaid",
       "type": "Set",
       "tags": [
         "ap",
@@ -534,7 +534,7 @@
       "handle": "apsht-hoodie-tracksuit",
       "title": "APSHT Hoodie Tracksuit",
       "description": "<p>Black APSHT hoodie with matching wide-leg pants with white side stripes.</p>",
-      "vendor": "A/P",
+      "vendor": "AlwaysPaid",
       "type": "Set",
       "tags": [
         "ap",

@@ -11,10 +11,10 @@ const products = data.products.flatMap((product) => {
   const entries = productViews(product);
   const primary = entries[0];
   if (!primary) return [];
-  const photos = [primary, ...entries.slice(1).filter((photo) => photo.model)];
+  const photos = [primary, ...entries.slice(1).filter((photo) => photo.model || photo.gallery)];
   return photos.map((photo) => ({ ...photo, title: product.title, url: product.url }));
 });
-const items = data.looks.length ? [...data.looks, ...products.filter((photo) => photo.model)] :
+const items = data.looks.length ? [...data.looks, ...products.filter((photo) => photo.model || photo.gallery)] :
   products.length ? products : suppliedGallery();
 const seen = new Set();
 const reveal = window.APDS.reduce ? null : new IntersectionObserver((entries) => {
