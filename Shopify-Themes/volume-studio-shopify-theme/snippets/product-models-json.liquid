@@ -6,6 +6,8 @@
       assign colours = 'white,red,blue,brown,gray,green,pink' | split: ','
     when 'ap-knit-balaclava'
       assign colours = 'cream' | split: ','
+    when 'apsht-windbreaker-set'
+      assign colours = 'pink' | split: ','
   endcase
   assign default_model = 'model-' | append: key | append: '.glb' | asset_url
 -%}

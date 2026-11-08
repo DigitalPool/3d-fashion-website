@@ -22,7 +22,7 @@
     <a class="vs__side vs__side--ap" href="{{ ap_url }}" data-cursor="Enter">
       <div class="vs__p"><b>P1</b> {{ section.settings.ap_label }}</div>
       <div class="vs__logo">{% render 'brand-logo', brand: 'ap', width: 500 %}</div>
-      <h2 class="vs__name">{{ settings.ap_name | default: 'A/P' }}</h2>
+      <h2 class="vs__name">{{ settings.ap_name | default: 'AlwaysPaid' }}</h2>
       <p class="vs__tag">{{ section.settings.ap_tagline }}</p>
       <div class="vs__stats" aria-hidden="true">
         <div class="vs__stat"><span>Drip</span><i style="--v:{{ section.settings.ap_s1 }}%;--d:.1s"></i></div>
@@ -67,10 +67,10 @@
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Two brands. One world." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Choose your side" },
     { "type": "text", "id": "ticker", "label": "Ticker words (separate with |)", "default": "New drop live | Limited pieces | Two brands, one world | Choose your side" },
-    { "type": "header", "content": "Player 1: A/P" },
+    { "type": "header", "content": "Player 1: AlwaysPaid" },
     { "type": "text", "id": "ap_label", "label": "Label", "default": "Streets division" },
     { "type": "textarea", "id": "ap_tagline", "label": "Tagline", "default": "Raw graffiti energy. Balaclavas, belts and heavyweight tees for people who move loud." },
-    { "type": "text", "id": "ap_cta", "label": "Button", "default": "Enter A/P" },
+    { "type": "text", "id": "ap_cta", "label": "Button", "default": "Enter AlwaysPaid" },
     { "type": "range", "id": "ap_s1", "label": "Stat: Drip", "min": 10, "max": 100, "step": 1, "default": 92 },
     { "type": "range", "id": "ap_s2", "label": "Stat: Menace", "min": 10, "max": 100, "step": 1, "default": 97 },
     { "type": "range", "id": "ap_s3", "label": "Stat: Rarity", "min": 10, "max": 100, "step": 1, "default": 81 },

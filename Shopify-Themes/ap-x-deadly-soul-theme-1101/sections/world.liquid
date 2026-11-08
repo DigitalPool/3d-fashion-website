@@ -24,7 +24,7 @@
   if brand == 'ds'
     assign brand_name = settings.ds_name | default: 'Deadly Soul'
   else
-    assign brand_name = settings.ap_name | default: 'A/P'
+    assign brand_name = settings.ap_name | default: 'AlwaysPaid'
   endif
   assign look_blocks = section.blocks | where: 'type', 'look'
 -%}
@@ -166,7 +166,7 @@
   "settings": [
     { "type": "select", "id": "brand", "label": "Brand", "default": "auto", "options": [
       { "value": "auto", "label": "Detect from collection" },
-      { "value": "ap", "label": "A/P" },
+      { "value": "ap", "label": "AlwaysPaid" },
       { "value": "ds", "label": "Deadly Soul" }
     ]},
     { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty on collection pages to use the current collection. On other pages, empty lists all products." },

@@ -8,6 +8,8 @@ const supplied = [
   ['ap-knit-balaclava', /balaclava/, 'A/P Knit Balaclava'],
   ['apsht-cropped-set', /cropped hoodie set|apsht.*cropped.*set/, 'APSHT Cropped Hoodie Set'],
   ['soul-messenger-bag', /messenger bag/, 'Deadly Soul Messenger Bag'],
+  ['apsht-windbreaker-set', /windbreaker/, 'APSHT Windbreaker Set'],
+  ['apsht-hoodie-tracksuit', /hoodie tracksuit/, 'APSHT Hoodie Tracksuit'],
 ];
 
 function suppliedEntry(p) {

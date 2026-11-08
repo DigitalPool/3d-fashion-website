@@ -44,10 +44,12 @@ function loadStore() {
     const images = (p.images || []).map((src) => imageObject(src, ++nextId, p.title));
     const single = p.variants.length === 1 && p.variants[0].title === 'Default Title';
     const productId = ++nextId;
+    const optionNames = p.option_names || [p.option_name];
     const variants = p.variants.map((v) => {
       const image = images.find((i) => i.src === v.image) || null;
+      const values = v.options || [v.title];
       return {
-        id: ++nextId, title: v.title, option1: v.title, option2: null, option3: null, options: [v.title],
+        id: ++nextId, title: values.join(' / '), option1: values[0], option2: values[1] ?? null, option3: values[2] ?? null, options: values,
         price: cents(v.price), compare_at_price: cents(v.compare_at_price), available: v.available !== false, sku: v.sku,
         featured_image: image, featured_media: image, image, url: `/products/${p.handle}`,
       };
@@ -58,10 +60,10 @@ function loadStore() {
       // The theme already shows its bundled studio shot, so leave that out of the media list to avoid a duplicate thumbnail.
       ...p, id: productId, object_type: 'product', url: `/products/${p.handle}`, images, media: images.filter((i) => !i.src.startsWith('/assets/mockup-')),
       featured_image: images[0] || null, featured_media: images[0] || null, variants,
-      options: [p.option_name], price: Math.min(...variants.map((v) => v.price)), compare_at_price: compare || null,
+      options: optionNames, price: Math.min(...variants.map((v) => v.price)), compare_at_price: compare || null,
       available: variants.some((v) => v.available), has_only_default_variant: single,
       selected_or_first_available_variant: first,
-      options_with_values: [{ name: p.option_name, position: 1, selected_value: first.title, values: variants.map((v) => v.title) }],
+      options_with_values: optionNames.map((name, i) => ({ name, position: i + 1, selected_value: first.options[i], values: [...new Set(variants.map((v) => v.options[i]))] })),
       collections: [],
     };
   });
@@ -431,7 +433,7 @@ export function createTheme(theme) {
         const chosen = found.variants.find((v) => v.id === Number(url.searchParams.get('variant'))) || found.selected_or_first_available_variant;
         const product = {
           ...found, selected_or_first_available_variant: chosen,
-          options_with_values: found.options_with_values.map((o) => ({ ...o, selected_value: chosen.title })),
+          options_with_values: found.options_with_values.map((o, i) => ({ ...o, selected_value: chosen.options[i] })),
         };
         return page('product', { product, page_title: found.title, page_description: found.description.replace(/<[^>]+>/g, ''), page_image: found.featured_image });
       }

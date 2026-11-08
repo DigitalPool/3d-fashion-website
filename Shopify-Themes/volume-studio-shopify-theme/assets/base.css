@@ -580,3 +580,8 @@ body.has-cursor .image-inspector button:disabled{cursor:default}
 .card__model{position:absolute;inset:0;opacity:0;transition:opacity .3s ease;pointer-events:none;background:radial-gradient(90% 70% at 50% 45%,#2c2c2f,#121214)}
 .card__model.is-on{opacity:1}
 .card__model canvas{display:block;width:100%;height:100%}
+
+/* Product thumbnails keep their size and the column scrolls when a product has many images */
+.pdp__thumbs{grid-auto-rows:max-content}
+.item__opts{display:grid;gap:6px;margin-top:8px}
+.item__opts .chips{margin-top:0}

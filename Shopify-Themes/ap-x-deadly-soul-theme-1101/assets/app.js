@@ -1,4 +1,4 @@
-/* AP x DEADLY SOUL | core runtime (cursor, sound, cart, transitions, page modules) */
+/* ALWAYSPAID x DEADLY SOUL | core runtime (cursor, sound, cart, transitions, page modules) */
 import { Sound } from './sound.js';
 import { Cart } from './cart.js';
 

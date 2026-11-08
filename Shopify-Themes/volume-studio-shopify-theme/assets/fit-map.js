@@ -27,6 +27,8 @@ const BY_HANDLE = {
   'ap-belt': { type: 'belt' },
   'butterfly-bowling-bag': { type: 'bag_bowling', color: 'pink' },
   'soul-messenger-bag': { type: 'bag_messenger', color: 'black' },
+  'apsht-windbreaker-set': { type: 'set', color: 'black' },
+  'apsht-hoodie-tracksuit': { type: 'set', color: 'black' },
 };
 
 const NAMED = {

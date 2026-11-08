@@ -24,7 +24,7 @@
         <li class="oi__item oi__item--{{ brand }}">
           <div class="oi__tag">
             <span class="oi__num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
-            <span class="oi__brand">{% if brand == 'ds' %}{{ settings.ds_name | default: 'Deadly Soul' }}{% else %}{{ settings.ap_name | default: 'A/P' }}{% endif %}</span>
+            <span class="oi__brand">{% if brand == 'ds' %}{{ settings.ds_name | default: 'Deadly Soul' }}{% else %}{{ settings.ap_name | default: 'AlwaysPaid' }}{% endif %}</span>
           </div>
           {% render 'product-card', product: product %}
         </li>

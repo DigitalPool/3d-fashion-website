@@ -1,7 +1,7 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "AP x Deadly Soul",
+    "theme_name": "AlwaysPaid x Deadly Soul",
     "theme_version": "1.0.0",
     "theme_author": "DigitalPool",
     "theme_documentation_url": "https://www.fiverr.com",
@@ -10,8 +10,8 @@
   {
     "name": "Brands",
     "settings": [
-      { "type": "header", "content": "A/P" },
-      { "type": "text", "id": "ap_name", "label": "Name", "default": "A/P" },
+      { "type": "header", "content": "AlwaysPaid" },
+      { "type": "text", "id": "ap_name", "label": "Name", "default": "AlwaysPaid" },
       { "type": "image_picker", "id": "ap_logo", "label": "Logo", "info": "Transparent PNG or SVG. White or light logo works best." },
       { "type": "collection", "id": "ap_collection", "label": "Collection" },
       { "type": "header", "content": "Deadly Soul" },
@@ -25,8 +25,8 @@
     "name": "Colours",
     "settings": [
       { "type": "color", "id": "color_bg", "label": "Background", "default": "#060608" },
-      { "type": "color", "id": "color_ap", "label": "A/P main", "default": "#E3122C" },
-      { "type": "color", "id": "color_ap_2", "label": "A/P highlight", "default": "#FF3B52" },
+      { "type": "color", "id": "color_ap", "label": "AlwaysPaid main", "default": "#E3122C" },
+      { "type": "color", "id": "color_ap_2", "label": "AlwaysPaid highlight", "default": "#FF3B52" },
       { "type": "color", "id": "color_ds", "label": "Deadly Soul main", "default": "#FF4FA0" },
       { "type": "color", "id": "color_ds_2", "label": "Deadly Soul highlight", "default": "#FFC2DD" }
     ]

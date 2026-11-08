@@ -9,7 +9,7 @@
     {%- liquid
       if b == 1
         assign key = 'ap'
-        assign name = settings.ap_name | default: 'A/P'
+        assign name = settings.ap_name | default: 'AlwaysPaid'
         assign img = section.settings.ap_image
         assign text = section.settings.ap_text
         assign est = section.settings.ap_est
@@ -62,11 +62,11 @@
     { "type": "text", "id": "line_1", "label": "Headline line 1", "default": "Two brands." },
     { "type": "text", "id": "line_2", "label": "Headline line 2 (outlined)", "default": "One world." },
     { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Write the story of how both brands started and what connects them.</p>" },
-    { "type": "header", "content": "A/P" },
+    { "type": "header", "content": "AlwaysPaid" },
     { "type": "image_picker", "id": "ap_image", "label": "Image" },
     { "type": "text", "id": "ap_class", "label": "Class", "default": "STREETWEAR // GRAFFITI" },
     { "type": "text", "id": "ap_est", "label": "Established", "default": "2024" },
-    { "type": "richtext", "id": "ap_text", "label": "Text", "default": "<p>Tell the A/P story here: where it comes from, who it's for and what it stands for.</p>" },
+    { "type": "richtext", "id": "ap_text", "label": "Text", "default": "<p>Tell the AlwaysPaid story here: where it comes from, who it's for and what it stands for.</p>" },
     { "type": "header", "content": "Deadly Soul" },
     { "type": "image_picker", "id": "ds_image", "label": "Image" },
     { "type": "text", "id": "ds_class", "label": "Class", "default": "GOTHIC // ACCESSORIES" },

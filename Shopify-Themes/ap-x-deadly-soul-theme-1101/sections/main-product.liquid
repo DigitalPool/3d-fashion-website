@@ -72,7 +72,7 @@
         ]
       }
     </script>
-    <p class="h-sub">{% if brand == 'ds' %}{{ settings.ds_name | default: 'Deadly Soul' }}{% else %}{{ settings.ap_name | default: 'A/P' }}{% endif %} // {{ product.type | default: 'Item' }}</p>
+    <p class="h-sub">{% if brand == 'ds' %}{{ settings.ds_name | default: 'Deadly Soul' }}{% else %}{{ settings.ap_name | default: 'AlwaysPaid' }}{% endif %} // {{ product.type | default: 'Item' }}</p>
     <h1 class="pdp__title">{{ product.title }}</h1>
     <div class="price" data-price>{{ current.price | money }}{% if current.compare_at_price > current.price %}<s>{{ current.compare_at_price | money }}</s>{% endif %}</div>
 

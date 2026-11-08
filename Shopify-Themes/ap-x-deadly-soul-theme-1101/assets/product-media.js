@@ -4,10 +4,12 @@ const supplied = [
   ['where-is-my-money-tee', /where.*my money/, 'Where Da F**k Is My Money Tee'],
   ['mugshot-tee', /mugshot/, 'Deadly Soul Mugshot Tee'],
   ['butterfly-bowling-bag', /butterfly.*bowling/, 'Deadly Soul Butterfly Bowling Bag'],
-  ['ap-belt', /^(a\/p |apsht )?belt$/, 'A/P Belt'],
-  ['ap-knit-balaclava', /balaclava/, 'A/P Knit Balaclava'],
+  ['ap-belt', /^(a\/p |apsht )?belt$/, 'AlwaysPaid Belt'],
+  ['ap-knit-balaclava', /balaclava/, 'AlwaysPaid Knit Balaclava'],
   ['apsht-cropped-set', /cropped hoodie set|apsht.*cropped.*set/, 'APSHT Cropped Hoodie Set'],
   ['soul-messenger-bag', /messenger bag/, 'Deadly Soul Messenger Bag'],
+  ['apsht-windbreaker-set', /windbreaker/, 'APSHT Windbreaker Set'],
+  ['apsht-hoodie-tracksuit', /hoodie tracksuit/, 'APSHT Hoodie Tracksuit'],
 ];
 
 function suppliedEntry(p) {

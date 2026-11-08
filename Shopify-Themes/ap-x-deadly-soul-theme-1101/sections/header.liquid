@@ -22,7 +22,7 @@
   </div>
   <nav class="hud__nav" aria-label="Main">
     <a class="hud__link" href="{{ routes.root_url }}"{% if template.name == 'index' %} aria-current="page"{% endif %}>Select</a>
-    <a class="hud__link hud__link--ap" href="{{ ap_url }}"{% if here == ap_url %} aria-current="page"{% endif %}>{{ settings.ap_name | default: 'A/P' }}</a>
+    <a class="hud__link hud__link--ap" href="{{ ap_url }}"{% if here == ap_url %} aria-current="page"{% endif %}>{{ settings.ap_name | default: 'AlwaysPaid' }}</a>
     <a class="hud__link hud__link--ds" href="{{ ds_url }}"{% if here == ds_url %} aria-current="page"{% endif %}>{{ settings.ds_name | default: 'Deadly Soul' }}</a>
     <a class="hud__link hud__link--fit" href="{{ fit_url }}"{% if here == fit_url %} aria-current="page"{% endif %}>Fit lab</a>
     <a class="hud__link" href="{{ gallery_url }}"{% if here == gallery_url %} aria-current="page"{% endif %}>Gallery</a>
@@ -42,7 +42,7 @@
 <nav class="mnav" id="mnav" data-mnav aria-label="Mobile">
   <button type="button" class="hud__btn mnav__close" data-mnav-close>Close &times;</button>
   <a href="{{ routes.root_url }}"><small>00</small>Select</a>
-  <a class="ap" href="{{ ap_url }}"><small>01</small>{{ settings.ap_name | default: 'A/P' }}</a>
+  <a class="ap" href="{{ ap_url }}"><small>01</small>{{ settings.ap_name | default: 'AlwaysPaid' }}</a>
   <a class="ds" href="{{ ds_url }}"><small>02</small>{{ settings.ds_name | default: 'Deadly Soul' }}</a>
   <a href="{{ fit_url }}"><small>03</small>Fit lab</a>
   <a href="{{ gallery_url }}"><small>04</small>Gallery</a>

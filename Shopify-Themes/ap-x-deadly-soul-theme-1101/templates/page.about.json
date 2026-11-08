@@ -1,1 +1,14 @@
-{ "sections": { "about": { "type": "about-brands", "settings": {} } }, "order": ["about"] }
+{
+  "sections": {
+    "about": {
+      "type": "about-brands",
+      "settings": {
+        "ap_text": "<p>AlwaysPaid LLC is more than just an LLC. It's a BRAND, a COMPANY, a LIFESTYLE: a group of individuals whose goal is to ALWAYS BE PAID.</p><p>Whether it's $100 in your savings or a few hundred dollars, as long as you have money, you are ALWAYSPAID. Thanks to our inspiring collections and impeccable customer service, we have been highly successful since day one. Browse our site, check out the latest additions to our collection, and get in touch with our team if you need any help. Happy shopping!</p>",
+        "ds_text": "<p>Deadly Soul has two meanings. The first comes from experience: after pouring into others for so long and getting nothing back, a soul turns deadly.</p><p>The second is pure slang. When something hits hard, it's deadly, as in \"that's some deadly gear you've got on.\" Deadly Soul is both: born from what you've been through, and made to turn heads.</p>"
+      }
+    }
+  },
+  "order": [
+    "about"
+  ]
+}

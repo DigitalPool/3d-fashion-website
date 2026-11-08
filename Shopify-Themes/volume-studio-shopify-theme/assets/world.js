@@ -132,6 +132,20 @@ function showLook(look, { reset = false, product, variant } = {}) {
   if (look.video) entries.unshift({ src: look.image, video: look.video, label: look.name });
   photos.show(entries, { reset, preferred: product && productViews(product, variant)[0]?.src });
 }
+/* One row of chips per option (colour, size ...). Each chip points at the variant it would select. */
+function optionChips(p, v) {
+  const names = (p.options || []).length ? p.options : ['Variant'];
+  const valuesOf = (x) => x.options || [x.title];
+  const current = valuesOf(v);
+  return names.map((name, i) => {
+    const values = [...new Set(p.variants.map((x) => valuesOf(x)[i]))];
+    return `<div class="chips" role="group" aria-label="${esc(name)}">${values.map((val) => {
+      const target = p.variants.find((x) => valuesOf(x).every((o, j) => (j === i ? o === val : o === current[j])))
+        || p.variants.find((x) => valuesOf(x)[i] === val);
+      return `<button type="button" class="chip${current[i] === val ? ' is-active' : ''}${target.available ? '' : ' is-soldout'}" data-variant="${target.id}" ${target.available ? '' : 'disabled'}>${esc(val)}</button>`;
+    }).join('')}</div>`;
+  }).join('');
+}
 function renderItems(look) {
   const prods = look.products || [];
   if (!prods.length) {
@@ -149,7 +163,7 @@ function renderItems(look) {
       <div>
         <h4 class="item__title"><a href="${esc(p.url)}">${esc(p.title)}</a></h4>
         <div class="price" data-p-price>${Cart.money(v.price)}${v.compare_at_price > v.price ? `<s>${Cart.money(v.compare_at_price)}</s>` : ''}</div>
-        ${multi ? `<div class="chips" role="group" aria-label="Variant">${p.variants.map((vv) => `<button type="button" class="chip${vv.id === v.id ? ' is-active' : ''}${vv.available ? '' : ' is-soldout'}" data-variant="${vv.id}" ${vv.available ? '' : 'disabled'}>${esc(vv.title)}</button>`).join('')}</div>` : ''}
+        ${multi ? `<div class="item__opts" data-opts>${optionChips(p, v)}</div>` : ''}
         <div class="item__row">
           <span class="tag">${v.available ? 'In stock' : 'Sold out'}</span>
           <button type="button" class="item__add" data-add-one ${v.available ? '' : 'disabled'}>Add +</button>
@@ -173,8 +187,8 @@ els.items.addEventListener('click', async (e) => {
   const chip = e.target.closest('[data-variant]');
   if (chip) {
     selected.set(p.id, +chip.dataset.variant);
-    $$('[data-variant]', art).forEach((c) => c.classList.toggle('is-active', c === chip));
     const v = variantFor(p);
+    $('[data-opts]', art).innerHTML = optionChips(p, v);
     $('[data-p-price]', art).innerHTML = Cart.money(v.price);
     Sound.play('tick');
     updateTotal(look);

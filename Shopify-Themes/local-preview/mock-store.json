@@ -1,5 +1,5 @@
 {
-  "_note": "Fake store data for the local preview only. Products come from Source/ap-deadly-soul-products.csv. Nothing here is uploaded to Shopify. Edit freely; pages reload on save.",
+  "_note": "Fake store data for the local preview only. Products come from Source/ap-deadly-soul-products.csv. Nothing here is uploaded to Shopify. Edit freely; pages reload on save. PLACEHOLDER PRICES ($0.00) on the APSHT Windbreaker Set and APSHT Hoodie Tracksuit until the client confirms them.",
   "shop": {
     "name": "A/P x Deadly Soul",
     "description": "Two brands. One world.",
@@ -352,6 +352,243 @@
           "compare_at_price": null,
           "available": true,
           "sku": "soul-messenger-bag"
+        }
+      ]
+    },
+    {
+      "handle": "apsht-windbreaker-set",
+      "title": "APSHT Windbreaker Set",
+      "description": "<p>APSHT windbreaker jacket with matching shorts. Available in black and white or pink and white.</p>",
+      "vendor": "A/P",
+      "type": "Set",
+      "tags": [
+        "ap",
+        "set",
+        "windbreaker"
+      ],
+      "option_names": [
+        "Colour",
+        "Size"
+      ],
+      "collection": "ap",
+      "images": [
+        "/mock-media/apsht-windbreaker-set/black-set-front.jpg",
+        "/mock-media/apsht-windbreaker-set/black-set-back.jpg",
+        "/mock-media/apsht-windbreaker-set/black-jacket-front.jpg",
+        "/mock-media/apsht-windbreaker-set/black-jacket-back.jpg",
+        "/mock-media/apsht-windbreaker-set/black-shorts.jpg",
+        "/mock-media/apsht-windbreaker-set/pink-set-front.jpg",
+        "/mock-media/apsht-windbreaker-set/pink-set-back.jpg",
+        "/mock-media/apsht-windbreaker-set/pink-jacket-front.jpg",
+        "/mock-media/apsht-windbreaker-set/pink-jacket-back.jpg",
+        "/mock-media/apsht-windbreaker-set/pink-shorts.jpg"
+      ],
+      "variants": [
+        {
+          "options": [
+            "Black",
+            "XS"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-black-xs",
+          "stock": 5,
+          "image": "/mock-media/apsht-windbreaker-set/black-set-front.jpg"
+        },
+        {
+          "options": [
+            "Black",
+            "S"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-black-s",
+          "stock": 5,
+          "image": "/mock-media/apsht-windbreaker-set/black-set-front.jpg"
+        },
+        {
+          "options": [
+            "Black",
+            "M"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-black-m",
+          "stock": 10,
+          "image": "/mock-media/apsht-windbreaker-set/black-set-front.jpg"
+        },
+        {
+          "options": [
+            "Black",
+            "L"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-black-l",
+          "stock": 2,
+          "image": "/mock-media/apsht-windbreaker-set/black-set-front.jpg"
+        },
+        {
+          "options": [
+            "Black",
+            "XL"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-black-xl",
+          "stock": 2,
+          "image": "/mock-media/apsht-windbreaker-set/black-set-front.jpg"
+        },
+        {
+          "options": [
+            "Black",
+            "2XL"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-black-2xl",
+          "stock": 1,
+          "image": "/mock-media/apsht-windbreaker-set/black-set-front.jpg"
+        },
+        {
+          "options": [
+            "Pink",
+            "XS"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-pink-xs",
+          "stock": 5,
+          "image": "/mock-media/apsht-windbreaker-set/pink-set-front.jpg"
+        },
+        {
+          "options": [
+            "Pink",
+            "S"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-pink-s",
+          "stock": 5,
+          "image": "/mock-media/apsht-windbreaker-set/pink-set-front.jpg"
+        },
+        {
+          "options": [
+            "Pink",
+            "M"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-pink-m",
+          "stock": 10,
+          "image": "/mock-media/apsht-windbreaker-set/pink-set-front.jpg"
+        },
+        {
+          "options": [
+            "Pink",
+            "L"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-pink-l",
+          "stock": 2,
+          "image": "/mock-media/apsht-windbreaker-set/pink-set-front.jpg"
+        },
+        {
+          "options": [
+            "Pink",
+            "XL"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-pink-xl",
+          "stock": 2,
+          "image": "/mock-media/apsht-windbreaker-set/pink-set-front.jpg"
+        },
+        {
+          "options": [
+            "Pink",
+            "2XL"
+          ],
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-windbreaker-set-pink-2xl",
+          "stock": 1,
+          "image": "/mock-media/apsht-windbreaker-set/pink-set-front.jpg"
+        }
+      ]
+    },
+    {
+      "handle": "apsht-hoodie-tracksuit",
+      "title": "APSHT Hoodie Tracksuit",
+      "description": "<p>Black APSHT hoodie with matching wide-leg pants with white side stripes.</p>",
+      "vendor": "A/P",
+      "type": "Set",
+      "tags": [
+        "ap",
+        "set",
+        "tracksuit"
+      ],
+      "option_name": "Size",
+      "collection": "ap",
+      "images": [
+        "/mock-media/apsht-hoodie-tracksuit/tracksuit.jpg",
+        "/mock-media/apsht-hoodie-tracksuit/hoodie.jpg"
+      ],
+      "variants": [
+        {
+          "title": "XS",
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-hoodie-tracksuit-xs"
+        },
+        {
+          "title": "S",
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-hoodie-tracksuit-s"
+        },
+        {
+          "title": "M",
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-hoodie-tracksuit-m"
+        },
+        {
+          "title": "L",
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-hoodie-tracksuit-l"
+        },
+        {
+          "title": "XL",
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-hoodie-tracksuit-xl"
+        },
+        {
+          "title": "2XL",
+          "price": "0.00",
+          "compare_at_price": null,
+          "available": true,
+          "sku": "apsht-hoodie-tracksuit-2xl"
         }
       ]
     }
